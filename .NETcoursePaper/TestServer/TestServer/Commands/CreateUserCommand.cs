@@ -52,9 +52,10 @@ namespace TestServer.Commands
 
             //var detailResponse = createdDetail.ToResponse();
 
-            //await context.WriteResponseAsync(201, JsonSerializeHelper.Serialize(detailResponse)).ConfigureAwait(false);
+            
             var user = userRequest.ToEntity();
-            var addedUser=await _userService.
+            await _userService.AddUserBD(user);
+            await context.WriteResponseAsync(201, "Registration was successful").ConfigureAwait(false);
         }
     }
 }

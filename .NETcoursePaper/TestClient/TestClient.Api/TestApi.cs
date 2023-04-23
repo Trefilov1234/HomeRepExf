@@ -9,7 +9,7 @@ using TestClient.Api.Responses;
 
 namespace TestClient.Api
 {
-    internal class TestApi: ApiBase,ITestApi
+    public class TestApi: ApiBase,ITestApi
     {
         public TestApi(string baseUri):base(baseUri) { }
         

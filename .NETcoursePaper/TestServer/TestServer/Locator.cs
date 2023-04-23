@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestServer.Commands;
+using TestServer.Services;
 
 namespace TestServer
 {
@@ -22,7 +24,7 @@ namespace TestServer
 
         private static void RegisterDependencies(IExportRegistrationBlock registration)
         {
-            //RegisterSingleton<ICommand, CreateDetailCommand>(registration);
+            RegisterSingleton<ICommand, CreateUserCommand>(registration);
             //RegisterSingleton<ICommand, CreateManufacturerCommand>(registration);
             //RegisterSingleton<ICommand, DeleteDetailCommand>(registration);
             //RegisterSingleton<ICommand, DeleteManufacturerCommand>(registration);
@@ -33,8 +35,8 @@ namespace TestServer
             //RegisterSingleton<ICommand, UpdateDetailCommand>(registration);
             //RegisterSingleton<ICommand, UpdateManufacturerCommand>(registration);
 
-            //RegisterSingleton<IServer, Server>(registration);
-            //RegisterSingleton<IDetailsProvider, DetailsProvider>(registration);
+            RegisterSingleton<IServer, Server>(registration);
+            RegisterSingleton<IUserService, UserService>(registration);
             //RegisterSingleton<IManufacturersProvider, ManufacturersProvider>(registration);
         }
 

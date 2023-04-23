@@ -28,7 +28,7 @@ namespace TestServer.Extensions
             return new User
             {
                 Login = userRequest.Login,
-                PasswordHash = Convert.ToBase64String(PasswordHasher.GenerateSha256Hash(userRequest.Password, PasswordHasher.GenerateSalt())),
+                PasswordHash = Convert.ToBase64String(PasswordHasher.GenerateSha256Hash(userRequest.Password)),
                 UserType = userRequest.UserType
                 
             };

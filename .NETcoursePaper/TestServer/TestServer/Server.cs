@@ -10,7 +10,7 @@ using TestServer.Common.Extensions;
 
 namespace TestServer
 {
-    public class Server
+    public class Server:IServer
     {
         private readonly ICommand[] _commands;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestServer
 {
-    public interface IServer
+    public interface IServer:IDisposable
     {
         public Task StartAsync(string uri);
     }

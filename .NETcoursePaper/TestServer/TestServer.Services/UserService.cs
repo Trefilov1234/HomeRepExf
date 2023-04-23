@@ -9,13 +9,14 @@ using TestServer.Context.Entities;
 
 namespace TestServer.Services
 {
-    public class UserService
+    public class UserService:IUserService
     {
         public async Task AddUserBD(User user)
         {
             using (var db = new TestContext())
             {
-
+                db.Users.Add(user);
+                await db.SaveChangesAsync();
             }
         }
     }

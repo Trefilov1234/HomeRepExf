@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{Binding Main,Source={StaticResource Locator}}">
+    <Grid Margin="150">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox Text="{Binding Login,Mode=TwoWay}" Grid.Row="0"/>
+        <TextBox Text="{Binding Password,Mode=TwoWay}" Grid.Row="1"/>
+        <Button Command="{Binding RegisterCommand,Mode=OneWay}" Grid.Row="2" Content="Register"/>
     </Grid>
 </Window>
