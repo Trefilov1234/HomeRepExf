@@ -1,0 +1,17 @@
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.exe.config
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.exe
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.pdb
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\Grace.dll
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\Newtonsoft.Json.dll
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.Common.exe
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.Common.pdb
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\TestServer.Common.exe.config
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\Grace.pdb
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\Grace.xml
+D:\progging\.NETcoursePaper\TestServer\TestServer\bin\Debug\Newtonsoft.Json.xml
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.csproj.AssemblyReference.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.csproj.SuggestedBindingRedirects.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.csproj.CoreCompileInputs.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.csproj.CopyComplete
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.exe
+D:\progging\.NETcoursePaper\TestServer\TestServer\obj\Debug\TestServer.pdb

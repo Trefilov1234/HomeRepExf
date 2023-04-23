@@ -1,0 +1,8 @@
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\bin\Debug\TestServer.Common.exe.config
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\bin\Debug\TestServer.Common.exe
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\bin\Debug\TestServer.Common.pdb
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\obj\Debug\TestServer.Common.csproj.AssemblyReference.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\obj\Debug\TestServer.Common.csproj.SuggestedBindingRedirects.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\obj\Debug\TestServer.Common.csproj.CoreCompileInputs.cache
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\obj\Debug\TestServer.Common.exe
+D:\progging\.NETcoursePaper\TestServer\TestServer.Common\obj\Debug\TestServer.Common.pdb
