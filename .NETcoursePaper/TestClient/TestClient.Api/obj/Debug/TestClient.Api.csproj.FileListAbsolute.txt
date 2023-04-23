@@ -1,0 +1,11 @@
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.csproj.AssemblyReference.cache
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.csproj.SuggestedBindingRedirects.cache
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.csproj.CoreCompileInputs.cache
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\bin\Debug\TestClient.Api.exe.config
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\bin\Debug\TestClient.Api.exe
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\bin\Debug\TestClient.Api.pdb
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\bin\Debug\Newtonsoft.Json.dll
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\bin\Debug\Newtonsoft.Json.xml
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.csproj.CopyComplete
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.exe
+D:\progging\.NETcoursePaper\TestClient\TestClient.Api\obj\Debug\TestClient.Api.pdb

@@ -1,0 +1,16 @@
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Services.exe.config
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Services.exe
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Services.pdb
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\EntityFramework.dll
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\EntityFramework.SqlServer.dll
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Context.exe
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Context.pdb
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\TestServer.Context.exe.config
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\EntityFramework.xml
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\bin\Debug\EntityFramework.SqlServer.xml
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.csproj.AssemblyReference.cache
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.csproj.SuggestedBindingRedirects.cache
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.csproj.CoreCompileInputs.cache
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.csproj.CopyComplete
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.exe
+C:\Repositories\HomeRepExf\.NETcoursePaper\TestServer\TestServer.Services\obj\Debug\TestServer.Services.pdb
