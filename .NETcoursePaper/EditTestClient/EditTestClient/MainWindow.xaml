@@ -1,0 +1,143 @@
+﻿<Window x:Class="EditTestClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EditTestClient" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:command="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000"
+        DataContext="{Binding Main,Source={StaticResource Locator}}">
+    <Grid>
+        
+        <Grid Margin="150" Visibility="{Binding AuthFormVanish,Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBox Text="{Binding Login,Mode=TwoWay}" Grid.Row="0"/>
+            <TextBox Text="{Binding Password,Mode=TwoWay}" Grid.Row="1"/>
+            <Label Content="{Binding RegStatus,Mode=TwoWay}" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Button Command="{Binding LoginCommand,Mode=OneWay}" Grid.Row="3" Content="Login"/>
+            <Button Command="{Binding RegisterCommand,Mode=OneWay}" Grid.Row="4" Content="Register"/>
+        </Grid>
+        <Grid Visibility="{Binding ChooseTestFormVanish,Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <ListBox Grid.Row="0" ItemsSource="{Binding TestsData,Mode=TwoWay}"  SelectedIndex="{Binding TestViewIndex,Mode=TwoWay}"/>
+            </ScrollViewer>
+            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Add test" Command="{Binding AddTestCommand,Mode=OneWay}"/>
+                <Button Grid.Column="1" Content="Edit test" Command="{Binding EditTestCommand,Mode=OneWay}"/>
+                <Button Grid.Column="2" Content="Delete test" Command="{Binding DeleteTestCommand,Mode=OneWay}"/>
+            </Grid>
+            <Button Grid.Row="2" Content="Back" Command="{Binding BackToAuthFormCommand,Mode=OneWay}"/>
+        </Grid>
+        <Grid Visibility="{Binding AddTestFormVanish,Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition Height="10*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Name of the Test" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="0"/>
+                <Label Content="number of attempts to pass the test" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding AddingTestName,Mode=TwoWay}" Grid.Column="0"/>
+                <TextBox Text="{Binding AddingTestAttempts,Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding AddingQuestions,Mode=TwoWay}" SelectedIndex="{Binding QuestionIndex,Mode=TwoWay}" Grid.Row="0"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Command="{Binding AddQuestionCommand,Mode=OneWay}" Content="Add question" Grid.Column="0" IsEnabled="{Binding PublishButtonClicked,Mode=TwoWay}"/>
+                    <Button Command="{Binding EditQuestionCommand,Mode=OneWay}" Content="Edit question" Grid.Column="1" IsEnabled="{Binding PublishButtonClicked,Mode=TwoWay}"/>
+                    <Button Command="{Binding DeleteQuestionCommand,Mode=OneWay}" Content="Delete question" Grid.Column="2" IsEnabled="{Binding PublishButtonClicked,Mode=TwoWay}"/>
+                </Grid>
+                <Button Grid.Row="2" Content="{Binding AddOrUpdateTestContent,Mode=TwoWay}" Command="{Binding PublishTestCommand,Mode=OneWay}"/>
+                <Button Grid.Row="3" Content="Back" Command="{Binding BackToChooseTestFormCommand,Mode=OneWay}"/>
+            </Grid>
+            
+        </Grid>
+        <Grid Visibility="{Binding AddOrEditQuestionFormVanish,Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" Source="{Binding QuestionImage}"/>
+            <Button Grid.Row="1" Content="Add image" Command="{Binding AddQuestionImageCommand,Mode=OneWay}"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Task" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="0"/>
+                <TextBox Text="{Binding QuestionTaskText,Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Answers" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="0"/>
+                <TextBox Text="{Binding QuestionAnswers,Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Right Answer" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="0"/>
+                <TextBox Text="{Binding QuestionRightAnswer,Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="Value of answer" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="0"/>
+                <TextBox Text="{Binding QuestionValueAnswer,Mode=TwoWay}" Grid.Column="1"/>
+            </Grid>
+            <Button Grid.Row="6" Content="{Binding AddOrUpdateQuestionButtonContent,Mode=TwoWay}" Command="{Binding AddQuestionFromQFCommand,Mode=OneWay}"/>
+            <Button Grid.Row="7" Content="Back" Command="{Binding BackToAddTestFormCommand,Mode=OneWay}"/>
+        </Grid>
+    </Grid>
+    
+</Window>

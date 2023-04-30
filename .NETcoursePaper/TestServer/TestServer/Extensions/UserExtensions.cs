@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
-using TestServer.Context.Entities;
+using TestServer.Domain.Entities;
 using TestServer.Requests;
 using TestServer.Responses;
 

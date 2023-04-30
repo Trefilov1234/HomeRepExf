@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
-using TestServer.Context.Entities;
+using TestServer.Domain.Entities;
+
 
 namespace TestServer.Context
 {
@@ -19,6 +20,7 @@ namespace TestServer.Context
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Question>().HasRequired(de => de.Test).WithMany(de => de.Questions).HasForeignKey(de => de.TestId);
+            modelBuilder.Entity<Test>().HasRequired(de => de.User).WithMany(de => de.Tests).HasForeignKey(de => de.UserId);
             base.OnModelCreating(modelBuilder);
         }
     }

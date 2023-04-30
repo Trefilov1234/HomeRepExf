@@ -25,19 +25,23 @@ namespace TestServer
         private static void RegisterDependencies(IExportRegistrationBlock registration)
         {
             RegisterSingleton<ICommand, CreateUserCommand>(registration);
-            //RegisterSingleton<ICommand, CreateManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, DeleteDetailCommand>(registration);
-            //RegisterSingleton<ICommand, DeleteManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, GetDetailCommand>(registration);
-            //RegisterSingleton<ICommand, GetDetailsCommand>(registration);
-            //RegisterSingleton<ICommand, GetManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, GetManufacturersCommand>(registration);
-            //RegisterSingleton<ICommand, UpdateDetailCommand>(registration);
-            //RegisterSingleton<ICommand, UpdateManufacturerCommand>(registration);
+            RegisterSingleton<ICommand, LoginUserCommand>(registration);
+            RegisterSingleton<ICommand, AddTestCommand>(registration);
+            RegisterSingleton<ICommand, GetTestsCommand>(registration);
+            RegisterSingleton<ICommand, AddQuestionCommand>(registration);
+            RegisterSingleton<ICommand, GetConcreteTestCommand>(registration);
+            RegisterSingleton<ICommand, GetQuestionsCommand>(registration);
+            RegisterSingleton<ICommand, UpdateQuestionCommand>(registration);
+            RegisterSingleton<ICommand, GetConcreteQuestionCommand>(registration);
+            RegisterSingleton<ICommand, DeleteQuestionCommand>(registration);
+            RegisterSingleton<ICommand, DeleteTestCommand>(registration);
+            RegisterSingleton<ICommand, UpdateTestCommand>(registration);
 
             RegisterSingleton<IServer, Server>(registration);
             RegisterSingleton<IUserService, UserService>(registration);
-            //RegisterSingleton<IManufacturersProvider, ManufacturersProvider>(registration);
+            RegisterSingleton<ITestService, TestService>(registration);
+            RegisterSingleton<IQuestionService, QuestionService>(registration);
+           
         }
 
         private static void RegisterSingleton<TFrom, TTo>(IExportRegistrationBlock registrationBlock) where TTo : TFrom

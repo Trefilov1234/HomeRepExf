@@ -9,7 +9,9 @@ using TestServer.Common.Extensions;
 using TestServer.Extensions;
 using TestServer.Helpers;
 using TestServer.Requests;
+using TestServer.Responses;
 using TestServer.Services;
+
 
 namespace TestServer.Commands
 {
@@ -32,30 +34,17 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(400, "Invalid request body content").ConfigureAwait(false);
                 return;
             }
-
-            //if (!Enum.TryParse(userRequest.UserType, true, out string userType))
-            //{
-            //    await context.WriteResponseAsync(400, $"Failed parse detail type {detailRequest.Type}").ConfigureAwait(false);
-            //    return;
-            //}
-
-            //var manufacturer = await _manufacturersProvider.GetManufacturerByNameAsync(detailRequest.ManufacturerName).ConfigureAwait(false);
-            //if (manufacturer == null)
-            //{
-            //    await context.WriteResponseAsync(404, $"Not found manufacturer by name {detailRequest.ManufacturerName}").ConfigureAwait(false);
-            //    return;
-            //}
-
-            //var detail = detailRequest.ToEntity(detailType, manufacturer.Id);
-
-            //var createdDetail = await _detailsProvider.CreateDetailAsync(detail).ConfigureAwait(false);
-
-            //var detailResponse = createdDetail.ToResponse();
-
-            
             var user = userRequest.ToEntity();
-            await _userService.AddUserBD(user);
-            await context.WriteResponseAsync(201, "Registration was successful").ConfigureAwait(false);
+            
+            var isSuccess=await _userService.AddUserBD(user);
+            if(isSuccess)
+            {
+                await context.WriteResponseAsync(201).ConfigureAwait(false);
+            }
+            else
+            {
+                await context.WriteResponseAsync(409).ConfigureAwait(false);
+            }  
         }
     }
 }

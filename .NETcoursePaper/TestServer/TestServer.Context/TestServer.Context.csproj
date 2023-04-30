@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7AD96091-37F1-48BB-BD55-6E2F14E51A4E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>TestServer.Context</RootNamespace>
     <AssemblyName>TestServer.Context</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -53,9 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Question.cs" />
-    <Compile Include="Entities\Test.cs" />
-    <Compile Include="Entities\User.cs" />
     <Compile Include="Migrations\202304230954180_InitialCreate.cs" />
     <Compile Include="Migrations\202304230954180_InitialCreate.designer.cs">
       <DependentUpon>202304230954180_InitialCreate.cs</DependentUpon>
@@ -64,8 +64,11 @@
     <Compile Include="Migrations\202304231023297_AddUserQuestionFKTest.designer.cs">
       <DependentUpon>202304231023297_AddUserQuestionFKTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304281326117_AddUserId.cs" />
+    <Compile Include="Migrations\202304281326117_AddUserId.designer.cs">
+      <DependentUpon>202304281326117_AddUserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestContext.cs" />
   </ItemGroup>
@@ -80,6 +83,15 @@
     <EmbeddedResource Include="Migrations\202304231023297_AddUserQuestionFKTest.resx">
       <DependentUpon>202304231023297_AddUserQuestionFKTest.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304281326117_AddUserId.resx">
+      <DependentUpon>202304281326117_AddUserId.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestServer.Domain\TestServer.Domain.csproj">
+      <Project>{de1f7f41-1af3-46d5-a2a7-f0bcdde05534}</Project>
+      <Name>TestServer.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

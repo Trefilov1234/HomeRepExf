@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{573A08E0-9B27-4790-B903-DD5EDE3AD30C}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>TestServer.Services</RootNamespace>
     <AssemblyName>TestServer.Services</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -55,9 +58,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IQuestionService.cs" />
+    <Compile Include="ITestService.cs" />
     <Compile Include="IUserService.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="ObjectsHelpers\QuestionRequest.cs" />
+    <Compile Include="ObjectsHelpers\QuestionResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionService.cs" />
+    <Compile Include="ObjectsHelpers\TestResponse.cs" />
+    <Compile Include="TestService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -66,8 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestServer.Context\TestServer.Context.csproj">
-      <Project>{7AD96091-37F1-48BB-BD55-6E2F14E51A4E}</Project>
+      <Project>{7ad96091-37f1-48bb-bd55-6e2f14e51a4e}</Project>
       <Name>TestServer.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestServer.Domain\TestServer.Domain.csproj">
+      <Project>{de1f7f41-1af3-46d5-a2a7-f0bcdde05534}</Project>
+      <Name>TestServer.Domain</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
