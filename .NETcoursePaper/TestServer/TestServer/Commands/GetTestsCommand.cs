@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using TestServer.Helpers;
-using TestServer.Requests;
 using TestServer.Services;
 using TestServer.Extensions;
 using TestServer.Common.Extensions;
+using TestServer.Services.DTO;
 
 namespace TestServer.Commands
 {
@@ -28,43 +25,34 @@ namespace TestServer.Commands
         {
             var tokenReq = context.Request.Headers.Get("JWT");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.Key)
+            if (!jwtData.IsSuccess)
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
             }
-
-            if (jwtData.Value[0].Equals("teacher"))
+            if (jwtData.UserRole.Equals(UserRoles.Teacher))
             {
-                var isSuccessTeacher = await _testService.GetTests(jwtData.Value[1]);
-                List<TestResponse> responses=new();
+                var isSuccessTeacher = await _testService.GetTests(jwtData.Login);
+                if (isSuccessTeacher == null)
+                {
+                    await context.WriteResponseAsync(409).ConfigureAwait(false);
+                    return;
+                }
+                List<TestResponseDTO> responses=new();
                 foreach (var el in isSuccessTeacher)
                 {
-                    responses.Add(new TestResponse() { Name = el.Name, AttemptsCount = el.AttemptsCount, CreatedBy = el.User.Login,Id=el.Id });
+                    responses.Add(new TestResponseDTO() { Name = el.Name, AttemptsCount = el.AttemptsCount, CreatedBy = el.User.Login,Id=el.Id });
                 }
-                
-                if (isSuccessTeacher != null)
-                {
-                    await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(responses)).ConfigureAwait(false);
-                }
-                else
-                {
-                    await context.WriteResponseAsync(409).ConfigureAwait(false);
-                }
+                await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(responses)).ConfigureAwait(false);
                 return;
             }
-            else
+            var isSuccess = await _testService.GetTests();
+            if (isSuccess == null)
             {
-                var isSuccess = await _testService.GetTests();
-                if (isSuccess != null)
-                {
-                    await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(isSuccess)).ConfigureAwait(false);
-                }
-                else
-                {
-                    await context.WriteResponseAsync(409).ConfigureAwait(false);
-                }
+                await context.WriteResponseAsync(409).ConfigureAwait(false);
+                return;
             }
+            await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(isSuccess)).ConfigureAwait(false);
         }
     }
 }

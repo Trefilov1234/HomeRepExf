@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestServer.Domain.Entities;
+using TestServer.Services.DTO;
 
 namespace TestServer.Services
 {
@@ -14,6 +12,6 @@ namespace TestServer.Services
         public Task<List<Test>> GetTests(string login);
         public Task<Test> GetTestById(int id);
         public Task<bool> DeleteTestById(int id);
-        public Task<bool> UpdateTestById(TestResponse test, int id);
+        public Task<bool> UpdateTestById(TestResponseDTO test, int id);
     }
 }

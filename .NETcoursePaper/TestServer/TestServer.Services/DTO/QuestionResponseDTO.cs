@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TestServer.Services.ObjectsHelpers
+﻿namespace TestServer.Services.DTO
 {
-    public class QuestionResponse
+    public class QuestionResponseDTO
     {
         public int Id { get; set; }
         public byte[] Image { get; set; }

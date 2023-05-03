@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using TestServer.Common.Extensions;
 using TestServer.Extensions;
 using TestServer.Helpers;
 using TestServer.Requests;
-using TestServer.Responses;
 using TestServer.Services;
 
 
@@ -34,17 +28,14 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(400, "Invalid request body content").ConfigureAwait(false);
                 return;
             }
-            var user = userRequest.ToEntity();
-            
+            var user = userRequest.ToEntity();            
             var isSuccess=await _userService.AddUserBD(user);
-            if(isSuccess)
-            {
-                await context.WriteResponseAsync(201).ConfigureAwait(false);
-            }
-            else
+            if(!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
-            }  
+                return;
+            }
+            await context.WriteResponseAsync(201).ConfigureAwait(false);
         }
     }
 }

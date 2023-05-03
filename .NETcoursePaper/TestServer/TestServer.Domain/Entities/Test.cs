@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TestServer.Domain.Entities
 {
@@ -14,5 +10,6 @@ namespace TestServer.Domain.Entities
         public int UserId { get; set; }
         public User User { get; set; }
         public ICollection<Question> Questions { get; set; }
+        public ICollection<UserResult> UserResults { get; set; }
     }
 }

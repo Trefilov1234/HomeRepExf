@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AddQuestionCommand.cs" />
+    <Compile Include="Commands\AddResultCommand.cs" />
     <Compile Include="Commands\AddTestCommand.cs" />
     <Compile Include="Commands\CreateUserCommand.cs" />
     <Compile Include="Commands\DeleteQuestionCommand.cs" />
@@ -72,12 +73,14 @@
     <Compile Include="Commands\GetConcreteQuestionCommand.cs" />
     <Compile Include="Commands\GetConcreteTestCommand.cs" />
     <Compile Include="Commands\GetQuestionsCommand.cs" />
+    <Compile Include="Commands\GetResultsCommand.cs" />
     <Compile Include="Commands\GetTestsCommand.cs" />
     <Compile Include="Commands\LoginUserCommand.cs" />
     <Compile Include="Commands\UpdateQuestionCommand.cs" />
     <Compile Include="Commands\UpdateTestCommand.cs" />
     <Compile Include="Extensions\HttpListenerContextExtensions.cs" />
     <Compile Include="Extensions\HttpListenerRequestExtensions.cs" />
+    <Compile Include="Extensions\MatchExtensions.cs" />
     <Compile Include="Extensions\QuestionExtensions.cs" />
     <Compile Include="Extensions\TestExtensions.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Responses\TestResponse.cs" />
     <Compile Include="Responses\UserResponse.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="UserRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

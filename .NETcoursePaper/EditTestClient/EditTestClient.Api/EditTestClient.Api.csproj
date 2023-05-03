@@ -55,21 +55,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiBase.cs" />
-    <Compile Include="Extensions\AsyncRelayCommand.cs" />
-    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="Helpers\JsonSerializeHelper.cs" />
     <Compile Include="Helpers\RequestUriHelper.cs" />
     <Compile Include="Helpers\ViewHelper.cs" />
+    <Compile Include="IQuestionApi.cs" />
+    <Compile Include="IResultApi.cs" />
     <Compile Include="ITestApi.cs" />
+    <Compile Include="IUserApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionApi.cs" />
     <Compile Include="Requests\QuestionRequest.cs" />
+    <Compile Include="Requests\ResultRequest.cs" />
     <Compile Include="Requests\TestRequest.cs" />
     <Compile Include="Requests\UserRequest.cs" />
     <Compile Include="Responses\QuestionResponse.cs" />
+    <Compile Include="Responses\ResultResponse.cs" />
     <Compile Include="Responses\TestResponse.cs" />
     <Compile Include="Responses\UserResponse.cs" />
+    <Compile Include="ResultApi.cs" />
     <Compile Include="TestApi.cs" />
+    <Compile Include="UserApi.cs" />
+    <Compile Include="UserRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TestServer.Domain.Entities;
-using TestServer.Services.ObjectsHelpers;
+using TestServer.Services.DTO;
 
 namespace TestServer.Services
 {
@@ -12,7 +9,7 @@ namespace TestServer.Services
     {
         public Task<bool> AddQuestion(Question question);
         public Task<List<Question>> GetQuestions(int testId);
-        public Task<bool> UpdateQuestion(int questionId, int testId, QuestionRequest question);
+        public Task<bool> UpdateQuestion(int questionId, int testId, QuestionRequestDTO question);
         public Task<Question> GetQuestionById(int questionId, int testId);
         public Task<bool> DeleteQuestion(int questionId, int testId);
     }

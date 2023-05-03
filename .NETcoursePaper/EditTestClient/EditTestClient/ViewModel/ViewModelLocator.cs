@@ -1,13 +1,8 @@
-
-
 using CommonServiceLocator;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-
 
 namespace EditTestClient.ViewModel
 {
-   
     public class ViewModelLocator
     {
         
@@ -30,7 +25,7 @@ namespace EditTestClient.ViewModel
         
         public static void Cleanup()
         {
-            // TODO Clear the ViewModels
+            
         }
     }
 }

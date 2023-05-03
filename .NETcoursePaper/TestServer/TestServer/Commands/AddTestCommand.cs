@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
 using TestServer.Requests;
-using TestServer.Responses;
 using TestServer.Services;
 using TestServer.Extensions;
 
@@ -35,28 +30,24 @@ namespace TestServer.Commands
             }
             var tokenReq = context.Request.Headers.Get("JWT");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.Key) 
+            if (!jwtData.IsSuccess) 
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
             }
-            if (!jwtData.Value[0].Equals("teacher"))
+            if (!jwtData.UserRole.Equals(UserRoles.Teacher))
             {
                 await context.WriteResponseAsync(403).ConfigureAwait(false);
                 return;
-            }
-            
+            }            
             var test = testRequest.ToEntity();
-
-            var isSuccess = await _testService.AddTest(test, jwtData.Value[1]) ;
-            if (isSuccess)
-            {
-                await context.WriteResponseAsync(200).ConfigureAwait(false);
-            }
-            else
+            var isSuccess = await _testService.AddTest(test, jwtData.Login);
+            if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
+                return;               
             }
+            await context.WriteResponseAsync(200).ConfigureAwait(false);
         }
     }
 }

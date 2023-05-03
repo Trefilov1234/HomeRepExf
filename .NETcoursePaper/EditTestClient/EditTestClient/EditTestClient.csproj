@@ -118,6 +118,10 @@
       <Project>{bf91ae22-ee97-4cb0-8ad9-fb68e6ef01fe}</Project>
       <Name>EditTestClient.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EditTestClient.Common\EditTestClient.Common.csproj">
+      <Project>{4a95158a-54a3-4a4b-9922-5a0ad2a0bbf8}</Project>
+      <Name>EditTestClient.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EditTestClient.Services\EditTestClient.Services.csproj">
       <Project>{27e30f81-7793-4c27-b3b4-b8528dd4c57e}</Project>
       <Name>EditTestClient.Services</Name>

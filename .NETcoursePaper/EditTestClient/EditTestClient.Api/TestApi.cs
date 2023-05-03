@@ -1,12 +1,10 @@
 ﻿using EditTestClient.Api.Requests;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using EditTestClient.Api.Responses;
+using EditTestClient.Api.Helpers;
 
 namespace EditTestClient.Api
 {
@@ -14,53 +12,38 @@ namespace EditTestClient.Api
     {
         public TestApi(string baseUri) : base(baseUri) { }
 
-        public Task<HttpResponseMessage> CreateUser(UserRequest user)
+        public async Task<HttpStatusCode> AddTest(TestRequest test,string token)
         {
-            return RegisterUser(HttpMethod.Post, "/users", body: user);
+            var response = await SendAsync(HttpMethod.Post, "/tests", token,body:test);
+            return response.StatusCode;
         }
-        public Task<HttpStatusCode> LoginUser(UserRequest user)
+
+        public async Task<HttpStatusCode> DeleteTest(int testId,string token)
         {
-            return VerifyUser(HttpMethod.Post, "/login", body: user);
+            var response = await SendAsync(HttpMethod.Delete, $"/tests/{testId}", token);
+            return response.StatusCode;
         }
-        public Task<HttpStatusCode> AddTest(TestRequest test)
+
+        public async Task<HttpStatusCode> UpdateTest(TestRequest testRequest,int testId,string token)
         {
-            return AddTest(HttpMethod.Post, "/tests", body: test);
+            var response = await SendAsync(HttpMethod.Put, $"/tests/{testId}", token, body: testRequest);
+            return response.StatusCode;
         }
-        public Task<HttpStatusCode> AddQuestion(QuestionRequest question,int testId)
+
+        public async Task<KeyValuePair<HttpStatusCode, List<TestResponse>>> GetTests(string token)
         {
-            return AddQuestion(HttpMethod.Post, $"/tests/{testId}/questions", body: question);
+            var response = await SendAsync(HttpMethod.Get, "/tests", token);   
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var testResp = JsonSerializeHelper.Deserialize<List<TestResponse>>(responseBody);
+            return new KeyValuePair<HttpStatusCode, List<TestResponse>>(response.StatusCode, testResp);
         }
-        public Task<HttpStatusCode> UpdateQuestion(QuestionRequest question,int testId,int questionId)
+
+        public async Task<KeyValuePair<HttpStatusCode, TestResponse>> GetConcreteTest(int id,string token)
         {
-            return UpdateQuestion(HttpMethod.Put, $"/tests/{testId}/questions/{questionId}", body: question);
-        }
-        public Task<QuestionResponse> GetConcreteQuestion(int testId, int questionId)
-        {
-            return GetConcreteQuestion(HttpMethod.Get, $"/tests/{testId}/questions/{questionId}");
-        }
-        public Task<HttpStatusCode> DeleteQuestion(int testId,int questionId)
-        {
-            return DeleteQuestion(HttpMethod.Delete, $"/tests/{testId}/questions/{questionId}");
-        }
-        public Task<HttpStatusCode> DeleteTest(int testId)
-        {
-            return DeleteQuestion(HttpMethod.Delete, $"/tests/{testId}");
-        }
-        public Task<HttpStatusCode> UpdateTest(TestRequest testRequest,int testId)
-        {
-            return DeleteQuestion(HttpMethod.Put, $"/tests/{testId}", body: testRequest);
-        }
-        public Task<KeyValuePair<HttpStatusCode, List<TestResponse>>> GetTests()
-        {
-            return GetTests(HttpMethod.Get, "/tests");
-        }
-        public Task<KeyValuePair<HttpStatusCode, TestResponse>> GetConcreteTest(int id)
-        {
-            return GetConcreteTest(HttpMethod.Get, $"/tests/{id}");
-        }
-        public Task<KeyValuePair<HttpStatusCode, List<QuestionResponse>>> GetQuestions(int testId)
-        {
-            return GetQuestions(HttpMethod.Get, $"/tests/{testId}/questions");
-        }
+            var response = await SendAsync(HttpMethod.Get, $"/tests/{id}", token);
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var testResp = JsonSerializeHelper.Deserialize<TestResponse>(responseBody);
+            return new KeyValuePair<HttpStatusCode, TestResponse>(response.StatusCode, testResp);
+        } 
     }
 }

@@ -1,10 +1,8 @@
-﻿using EditTestClient.Api.Requests;
-using EditTestClient.Api.Responses;
+﻿using EditTestClient.Api.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace EditTestClient.Api.Helpers
 {
@@ -21,6 +19,7 @@ namespace EditTestClient.Api.Helpers
             }
             return nameNAttempts;
         }
+
         public static List<string> GetQuestions(List<QuestionResponse> questionRequests)
         {
             var texts= questionRequests.Select(x=>x.Text).ToList();
@@ -30,6 +29,47 @@ namespace EditTestClient.Api.Helpers
                 nameNAttempts.Add(texts[i]);
             }
             return nameNAttempts;
+        }
+
+        public static List<string> GetAnswers(string answers )
+        {
+            var splittedAnswers=answers.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> variants = new List<string>();
+            for (var i = 0; i < splittedAnswers.Count; i++)
+            {
+                variants.Add($"{i+1}) {splittedAnswers[i]}");
+            }
+            return variants;
+        }
+
+        public static string ListToString(List<string> list)
+        {
+            var sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                sb.AppendLine(item);
+            }
+            return sb.ToString();
+        }
+
+        public static string ListToString(List<int> list)
+        {
+            var sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                sb.Append(item.ToString()+" ");
+            }
+            return sb.ToString();
+        }
+
+        public static List<string> GetResults(List<ResultResponse> list)
+        {
+            List<string> results = new List<string>();
+            foreach (var item in list)
+            {
+                results.Add($"{item.UserLogin} - {item.TestName} - {item.Result}");
+            }
+            return results;
         }
     }
 

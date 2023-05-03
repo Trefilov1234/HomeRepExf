@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TestServer.Common.Extensions;
-using TestServer.Domain.Entities;
+﻿using TestServer.Domain.Entities;
 using TestServer.Requests;
 using TestServer.Responses;
 

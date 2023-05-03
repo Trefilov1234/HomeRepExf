@@ -49,6 +49,7 @@
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Test.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\UserResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

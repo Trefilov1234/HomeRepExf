@@ -1,9 +1,6 @@
 ﻿using Grace.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServer.Commands;
 using TestServer.Services;
 
@@ -36,12 +33,14 @@ namespace TestServer
             RegisterSingleton<ICommand, DeleteQuestionCommand>(registration);
             RegisterSingleton<ICommand, DeleteTestCommand>(registration);
             RegisterSingleton<ICommand, UpdateTestCommand>(registration);
+            RegisterSingleton<ICommand, AddResultCommand>(registration);
+            RegisterSingleton<ICommand, GetResultsCommand>(registration);
 
             RegisterSingleton<IServer, Server>(registration);
             RegisterSingleton<IUserService, UserService>(registration);
             RegisterSingleton<ITestService, TestService>(registration);
             RegisterSingleton<IQuestionService, QuestionService>(registration);
-           
+            RegisterSingleton<IResultService, ResultService>(registration);
         }
 
         private static void RegisterSingleton<TFrom, TTo>(IExportRegistrationBlock registrationBlock) where TTo : TFrom

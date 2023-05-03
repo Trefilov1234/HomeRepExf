@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using TestServer.Helpers;
 using TestServer.Requests;
@@ -40,17 +37,17 @@ namespace TestServer.Commands
             {
                 userType = db.Users.FirstOrDefault(x => x.Login.Equals(user.Login)).UserType;
             }
-                var isSuccess = _userService.CheckUser(user);
-            if (isSuccess)
-            {
-                await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(new UserResponse() { 
-                    JWT=JWT.GetToken(user.Login,user.PasswordHash, userType)
-                })).ConfigureAwait(false);
-            }
-            else
+            var isSuccess = _userService.CheckUser(user);
+            if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
+                return; 
             }
+            await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(new UserResponse()
+            {
+                JWT = JWT.GetToken(user.Login, user.PasswordHash, userType),
+                UserType = userType
+            })).ConfigureAwait(false);
         }
     }
 }

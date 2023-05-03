@@ -91,10 +91,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Jwt\ConfigurationTokens.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\JWT.cs" />
+    <Compile Include="Jwt\JWT.cs" />
     <Compile Include="Extensions\PasswordHasher.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />
+    <Compile Include="Jwt\JwtData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

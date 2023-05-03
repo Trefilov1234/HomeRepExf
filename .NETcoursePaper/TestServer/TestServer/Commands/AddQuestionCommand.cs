@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
 using TestServer.Requests;
 using TestServer.Services;
 using TestServer.Extensions;
-using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
@@ -28,8 +23,7 @@ namespace TestServer.Commands
         }
         public async Task HandleRequestAsync(HttpListenerContext context)
         {
-            var match = Regex.Match(context.Request.Url.AbsolutePath, Path, RegexOptions.IgnoreCase);
-            var id = int.Parse(match.Groups[testId].Value);
+            int id = Path.GetIntGroup(context, testId);
             var requestBody = await context.GetRequestBodyAsync().ConfigureAwait(false);
             if (!JsonSerializeHelper.TryDeserialize<QuestionRequest>(requestBody, out var questionRequest))
             {
@@ -38,28 +32,24 @@ namespace TestServer.Commands
             }
             var tokenReq = context.Request.Headers.Get("JWT");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.Key)
+            if (!jwtData.IsSuccess)
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
             }
-            if (!jwtData.Value[0].Equals("teacher"))
+            if (!jwtData.UserRole.Equals(UserRoles.Teacher))
             {
                 await context.WriteResponseAsync(403).ConfigureAwait(false);
                 return;
             }
-
             var question = questionRequest.ToEntity(id);
-
             var isSuccess = await _questionService.AddQuestion(question);
-            if (isSuccess)
+            if (!isSuccess)
             {
-                await context.WriteResponseAsync(200).ConfigureAwait(false);
+                await context.WriteResponseAsync(409).ConfigureAwait(false); 
+                return;
             }
-            else
-            {
-                await context.WriteResponseAsync(409).ConfigureAwait(false);
-            }
+            await context.WriteResponseAsync(200).ConfigureAwait(false);
         }
     }
 }

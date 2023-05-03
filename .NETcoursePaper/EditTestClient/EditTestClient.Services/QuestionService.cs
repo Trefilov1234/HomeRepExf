@@ -1,11 +1,6 @@
-﻿using EditTestClient.Api.Requests;
-using EditTestClient.Api.Responses;
-using System;
+﻿using EditTestClient.Api.Responses;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EditTestClient.Services
 {
@@ -17,6 +12,7 @@ namespace EditTestClient.Services
         {
             QuestionBank=new List<QuestionResponse>();
         }
+
         public bool AddQuestion(byte[] image,string task,string answers,string rightAnswer,int answerValue)
         {
             if (QuestionBank.FirstOrDefault(x=>x.Text.Equals(task))==null)
@@ -36,6 +32,7 @@ namespace EditTestClient.Services
                 return false;
             }
         }
+
         public bool UpdateQuestion(int index,byte[] image, string task, string answers, string rightAnswer, int answerValue)
         {
             var tasks= QuestionBank.Select(x => x.Text).ToList();  
