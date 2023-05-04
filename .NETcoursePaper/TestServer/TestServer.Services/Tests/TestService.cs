@@ -6,11 +6,11 @@ using TestServer.Context;
 using TestServer.Domain.Entities;
 using TestServer.Services.DTO;
 
-namespace TestServer.Services
+namespace TestServer.Services.Tests
 {
-    public class TestService:ITestService
+    public class TestService : ITestService
     {
-        public async Task<bool> AddTest(Test test,string login)
+        public async Task<bool> AddTest(Test test, string login)
         {
             using var db = new TestContext();
             var curUser = db.Users.FirstOrDefault(x => x.Login == login);
@@ -58,7 +58,7 @@ namespace TestServer.Services
             return true;
         }
 
-        public async Task<bool> UpdateTestById(TestResponseDTO test,int id)
+        public async Task<bool> UpdateTestById(TestResponseDTO test, int id)
         {
             using var db = new TestContext();
             var curTest = await db.Tests.FirstOrDefaultAsync(x => x.Id == id);

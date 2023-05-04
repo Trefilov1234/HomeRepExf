@@ -15,7 +15,7 @@ namespace TestServer.Extensions
                 Id = user.Id,
                 Login = user.Login,
                 PasswordHash = user.PasswordHash,
-                UserType=user.UserType
+                UserType = user.UserType
             };
         }
 
@@ -26,9 +26,9 @@ namespace TestServer.Extensions
                 Login = userRequest.Login,
                 PasswordHash = Convert.ToBase64String(PasswordHasher.GenerateSha256Hash(userRequest.Password)),
                 UserType = userRequest.UserType
-                
+
             };
-            
+
         }
     }
 }

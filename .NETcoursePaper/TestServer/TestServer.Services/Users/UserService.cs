@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using TestServer.Context;
 using TestServer.Domain.Entities;
 
-namespace TestServer.Services
+namespace TestServer.Services.Users
 {
-    public class UserService:IUserService
+    public class UserService : IUserService
     {
         public async Task<bool> AddUserBD(User user)
         {

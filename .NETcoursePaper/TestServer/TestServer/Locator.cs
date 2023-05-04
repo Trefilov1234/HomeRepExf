@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using TestServer.Commands;
-using TestServer.Services;
+using TestServer.Services.Questions;
+using TestServer.Services.Results;
+using TestServer.Services.Tests;
+using TestServer.Services.Users;
 
 namespace TestServer
 {
@@ -100,7 +103,6 @@ namespace TestServer
         {
             return _container.TryLocateByName(name, out value, extraData, consider);
         }
-        // ReSharper disable MethodOverloadWithOptionalParameter
         public object Locate(Type type, object extraData = null, ActivationStrategyFilter consider = null, object withKey = null, bool isDynamic = false)
         {
             return _container.Locate(type, extraData, consider, withKey, isDynamic);
@@ -109,6 +111,5 @@ namespace TestServer
         {
             return _container.Locate<T>(extraData, consider, withKey, isDynamic);
         }
-        // ReSharper restore MethodOverloadWithOptionalParameter
     }
 }

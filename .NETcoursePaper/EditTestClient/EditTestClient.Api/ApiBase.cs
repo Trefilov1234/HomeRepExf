@@ -10,7 +10,7 @@ namespace EditTestClient.Api
     {
         private readonly string _baseUri;
         private readonly HttpClient _httpClient;
-        private const string AuthorizationHeaderKey = "JWT";
+        private const string AuthorizationHeaderKey = "Authorization";
         protected ApiBase(string baseUri)
         {
             _baseUri = baseUri;
@@ -28,7 +28,7 @@ namespace EditTestClient.Api
 
             var request = new HttpRequestMessage(method, uri);
             if (!string.IsNullOrEmpty(token))
-                request.Headers.Add(AuthorizationHeaderKey, $"{token}");
+                request.Headers.Add(AuthorizationHeaderKey, $"Bearer {token}");
             if (body != null)
                 request.Content = new StringContent(JsonSerializeHelper.Serialize(body));
 
@@ -44,7 +44,7 @@ namespace EditTestClient.Api
             Dictionary<string, string> parameters = null,
             object body = null)
         {
-            var response = await SendAsync(method, path,token, parameters, body).ConfigureAwait(false);
+            var response = await SendAsync(method, path, token, parameters, body).ConfigureAwait(false);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             return JsonSerializeHelper.Deserialize<TResult>(responseBody);
         }

@@ -19,8 +19,8 @@ namespace TestServer.Extensions
         {
             return new Test
             {
-                Name= testRequest.Name,
-                AttemptsCount= testRequest.AttemptsCount
+                Name = testRequest.Name,
+                AttemptsCount = testRequest.AttemptsCount
             };
 
         }

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using TestServer.Domain.Entities;
 
-namespace TestServer.Services
+namespace TestServer.Services.Users
 {
     public interface IUserService
     {

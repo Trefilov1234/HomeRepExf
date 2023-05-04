@@ -83,7 +83,7 @@
                     <Button Command="{Binding EditQuestionCommand,Mode=OneWay}" Content="Edit question" Grid.Column="1" IsEnabled="{Binding PublishButtonClicked,Mode=OneWay}"/>
                     <Button Command="{Binding DeleteQuestionCommand,Mode=OneWay}" Content="Delete question" Grid.Column="2" IsEnabled="{Binding PublishButtonClicked,Mode=OneWay}"/>
                 </Grid>
-                <Button Grid.Row="2" Content="{Binding AddOrUpdateTestContent,Mode=OneWay}" Command="{Binding PublishTestCommand,Mode=OneWay}"/>
+                <Button Grid.Row="2" Content="{Binding AddOrUpdateTestContent,Mode=OneWay}" Command="{Binding PublishTestCommand,Mode=OneWay}" IsEnabled="{Binding PublishTestButtonClickedForDisable,Mode=TwoWay}"/>
                 <Button Grid.Row="3" Content="Back" Command="{Binding BackToChooseTestFormCommand,Mode=OneWay}"/>
             </Grid>
         </Grid>

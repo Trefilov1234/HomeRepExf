@@ -4,17 +4,18 @@ using System.Net;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
-using TestServer.Services;
+using TestServer.Services.Questions;
 using TestServer.Extensions;
 using TestServer.Services.DTO;
+using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
-    public class GetQuestionsCommand:ICommand
+    public class GetQuestionsCommand : ICommand
     {
         private const string TestIdKey = "TestId";
         public string Path => @$"/tests/(?<{TestIdKey}>\d+)/questions";
-        
+
         public HttpMethod Method => HttpMethod.Get;
 
         private readonly IQuestionService _questionService;
@@ -23,12 +24,12 @@ namespace TestServer.Commands
         {
             _questionService = questionService;
         }
-        public async Task HandleRequestAsync(HttpListenerContext context)
+        public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
-            var testId = Path.GetIntGroup(context, TestIdKey);
-            var tokenReq = context.Request.Headers.Get("JWT");
+            var testId = path.GetIntGroup(TestIdKey);
+            var tokenReq = context.Request.Headers.Get("Authorization");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.IsSuccess)
+            if (jwtData.IsFaulted)
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
@@ -42,7 +43,7 @@ namespace TestServer.Commands
             List<QuestionResponseDTO> responses = new();
             foreach (var el in isSuccess)
             {
-                responses.Add(new QuestionResponseDTO() { Text=el.Text,Answers=el.Answers, RightAnswer=el.RightAnswer,AnswerValue=el.AnswerValue, Id = el.Id,TestName=el.Test.Name });
+                responses.Add(new QuestionResponseDTO() { Text = el.Text, Answers = el.Answers, RightAnswer = el.RightAnswer, AnswerValue = el.AnswerValue, Id = el.Id, TestName = el.Test.Name });
             }
             await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(responses)).ConfigureAwait(false);
         }

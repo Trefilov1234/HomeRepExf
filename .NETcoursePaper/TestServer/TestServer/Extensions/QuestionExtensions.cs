@@ -5,7 +5,7 @@ namespace TestServer.Extensions
 {
     public static class QuestionExtensions
     {
-        public static Question ToEntity(this QuestionRequest request,int testId)
+        public static Question ToEntity(this QuestionRequest request, int testId)
         {
             return new Question()
             {
@@ -14,7 +14,7 @@ namespace TestServer.Extensions
                 RightAnswer = request.RightAnswer,
                 AnswerValue = request.AnswerValue,
                 TestId = testId,
-                Image = request.Image, 
+                Image = request.Image,
             };
         }
     }

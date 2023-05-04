@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TestServer.Services.DTO;
 
-namespace TestServer.Services
+namespace TestServer.Services.Results
 {
     public interface IResultService
     {

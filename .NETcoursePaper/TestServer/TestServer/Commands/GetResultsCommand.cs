@@ -3,12 +3,13 @@ using System.Net;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
-using TestServer.Services;
+using TestServer.Services.Results;
 using TestServer.Extensions;
+using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
-    public class GetResultsCommand:ICommand
+    public class GetResultsCommand : ICommand
     {
         private const string TestIdKey = "TestId";
         public string Path => @$"/tests/(?<{TestIdKey}>\d+)/results";
@@ -21,12 +22,12 @@ namespace TestServer.Commands
         {
             _resultService = resultService;
         }
-        public async Task HandleRequestAsync(HttpListenerContext context)
+        public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
-            var testId = Path.GetIntGroup(context, TestIdKey);
-            var tokenReq = context.Request.Headers.Get("JWT");
+            var testId = path.GetIntGroup(TestIdKey);
+            var tokenReq = context.Request.Headers.Get("Authorization");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.IsSuccess)
+            if (jwtData.IsFaulted)
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;

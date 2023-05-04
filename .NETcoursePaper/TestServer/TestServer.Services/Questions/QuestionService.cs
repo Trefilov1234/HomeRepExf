@@ -7,9 +7,9 @@ using TestServer.Context;
 using TestServer.Domain.Entities;
 using TestServer.Services.DTO;
 
-namespace TestServer.Services
+namespace TestServer.Services.Questions
 {
-    public class QuestionService: IQuestionService
+    public class QuestionService : IQuestionService
     {
         public async Task<bool> AddQuestion(Question question)
         {
@@ -33,7 +33,7 @@ namespace TestServer.Services
             return questions;
         }
 
-        public async Task<bool> UpdateQuestion(int questionId,int testId,QuestionRequestDTO question)
+        public async Task<bool> UpdateQuestion(int questionId, int testId, QuestionRequestDTO question)
         {
             using var db = new TestContext();
             var curQuestion = await db.Questions.FirstOrDefaultAsync(x => x.Id == questionId);
@@ -47,14 +47,14 @@ namespace TestServer.Services
             return true;
         }
 
-        public async Task<Question> GetQuestionById(int questionId,int testId)
+        public async Task<Question> GetQuestionById(int questionId, int testId)
         {
             using var db = new TestContext();
             var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));
             return question;
         }
 
-        public async Task<bool> DeleteQuestion(int questionId,int testId)
+        public async Task<bool> DeleteQuestion(int questionId, int testId)
         {
             using var db = new TestContext();
             var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));

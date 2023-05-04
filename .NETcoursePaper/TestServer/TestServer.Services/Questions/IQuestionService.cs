@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using TestServer.Domain.Entities;
 using TestServer.Services.DTO;
 
-namespace TestServer.Services
+namespace TestServer.Services.Questions
 {
     public interface IQuestionService
     {

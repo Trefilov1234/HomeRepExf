@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using TestServer.Helpers;
 using TestServer.Requests;
 using TestServer.Responses;
-using TestServer.Services;
+using TestServer.Services.Users;
 using TestServer.Extensions;
 using TestServer.Common.Extensions;
 using TestServer.Context;
+using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
-    public class LoginUserCommand:ICommand
+    public class LoginUserCommand : ICommand
     {
         public string Path => @"/login";
         public HttpMethod Method => HttpMethod.Post;
@@ -23,7 +24,7 @@ namespace TestServer.Commands
         {
             _userService = userService;
         }
-        public async Task HandleRequestAsync(HttpListenerContext context)
+        public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
             var requestBody = await context.GetRequestBodyAsync().ConfigureAwait(false);
             if (!JsonSerializeHelper.TryDeserialize<UserRequest>(requestBody, out var userRequest))
@@ -33,7 +34,7 @@ namespace TestServer.Commands
             }
             var user = userRequest.ToEntity();
             string userType;
-            using (var db=new TestContext())
+            using (var db = new TestContext())
             {
                 userType = db.Users.FirstOrDefault(x => x.Login.Equals(user.Login)).UserType;
             }
@@ -41,11 +42,11 @@ namespace TestServer.Commands
             if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
-                return; 
+                return;
             }
             await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(new UserResponse()
             {
-                JWT = JWT.GetToken(user.Login, user.PasswordHash, userType),
+                JWT = JWT.GetToken(user.Login, userType),
                 UserType = userType
             })).ConfigureAwait(false);
         }

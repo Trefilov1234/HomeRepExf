@@ -1,7 +1,7 @@
 ﻿using EditTestClient.Api.Responses;
 using System.Collections.Generic;
 
-namespace EditTestClient.Services
+namespace EditTestClient.Services.Tests
 {
     public interface ITestService
     {

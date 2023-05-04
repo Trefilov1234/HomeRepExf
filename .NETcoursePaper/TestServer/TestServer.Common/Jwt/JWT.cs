@@ -11,19 +11,23 @@ namespace TestServer.Common.Extensions
 {
     public static class JWT
     {
-        public static string GetToken(string login,string HashPassword,string UserType)
+        private const string BearerPrefix = "Bearer ";
+
+        public static string GetToken(string login, string UserType)
         {
             var handler = new JwtSecurityTokenHandler();
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.Sec));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.SecurityKey));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-            var identity = new ClaimsIdentity(new GenericIdentity(login), 
-                new[] { new Claim("UserType", UserType),new Claim("Login", login)});
-            var token = handler.CreateJwtSecurityToken(subject: identity,signingCredentials: signingCredentials,issuer:ConfigurationTokens.Issuer);
+            var identity = new ClaimsIdentity(new GenericIdentity(login),
+                new[] { new Claim("UserType", UserType), new Claim("Login", login) });
+            var token = handler.CreateJwtSecurityToken(subject: identity, signingCredentials: signingCredentials, issuer: ConfigurationTokens.Issuer);
             return handler.WriteToken(token);
         }
 
         public static JwtData ValidateToken(string authToken)
         {
+            if (authToken?.StartsWith(BearerPrefix, StringComparison.OrdinalIgnoreCase) == true)
+                authToken = authToken.Substring(BearerPrefix.Length);
             var tokenHandler = new JwtSecurityTokenHandler();
             var validationParameters = GetValidationParameters();
             string userType;
@@ -32,14 +36,14 @@ namespace TestServer.Common.Extensions
             try
             {
                 var claimsPrincipal = tokenHandler.ValidateToken(authToken, validationParameters, out validatedToken);
-                userType=claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
+                userType = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "UserType")?.Value;
                 login = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "Login")?.Value;
             }
-            catch (Exception )
+            catch (Exception)
             {
-                return new JwtData { IsSuccess = false };
+                return new JwtData() { IsFaulted = true };
             }
-            return new JwtData { IsSuccess = true, UserRole = userType, Login = login };
+            return new JwtData { UserRole = userType, Login = login };
         }
 
         private static TokenValidationParameters GetValidationParameters()
@@ -49,7 +53,8 @@ namespace TestServer.Common.Extensions
                 ValidateLifetime = false,
                 ValidateAudience = false,
                 ValidateIssuer = false,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.Sec))
+                ValidIssuer = ConfigurationTokens.Issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.SecurityKey))
             };
         }
     }

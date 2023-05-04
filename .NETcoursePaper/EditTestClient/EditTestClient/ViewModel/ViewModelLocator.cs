@@ -5,12 +5,12 @@ namespace EditTestClient.ViewModel
 {
     public class ViewModelLocator
     {
-        
+
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-           
+
 
             SimpleIoc.Default.Register<MainViewModel>();
         }
@@ -22,10 +22,10 @@ namespace EditTestClient.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
         public static void Cleanup()
         {
-            
+
         }
     }
 }

@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
 using TestServer.Requests;
-using TestServer.Services;
+using TestServer.Services.Tests;
 using TestServer.Extensions;
+using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
-    public class AddTestCommand:ICommand
+    public class AddTestCommand : ICommand
     {
         public string Path => @"/tests";
         public HttpMethod Method => HttpMethod.Post;
@@ -20,7 +21,7 @@ namespace TestServer.Commands
         {
             _testService = testService;
         }
-        public async Task HandleRequestAsync(HttpListenerContext context)
+        public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
             var requestBody = await context.GetRequestBodyAsync().ConfigureAwait(false);
             if (!JsonSerializeHelper.TryDeserialize<TestRequest>(requestBody, out var testRequest))
@@ -28,9 +29,9 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(400, "Invalid request body content").ConfigureAwait(false);
                 return;
             }
-            var tokenReq = context.Request.Headers.Get("JWT");
+            var tokenReq = context.Request.Headers.Get("Authorization");
             var jwtData = JWT.ValidateToken(tokenReq);
-            if (!jwtData.IsSuccess) 
+            if (jwtData.IsFaulted)
             {
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
@@ -39,13 +40,13 @@ namespace TestServer.Commands
             {
                 await context.WriteResponseAsync(403).ConfigureAwait(false);
                 return;
-            }            
+            }
             var test = testRequest.ToEntity();
             var isSuccess = await _testService.AddTest(test, jwtData.Login);
             if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
-                return;               
+                return;
             }
             await context.WriteResponseAsync(200).ConfigureAwait(false);
         }

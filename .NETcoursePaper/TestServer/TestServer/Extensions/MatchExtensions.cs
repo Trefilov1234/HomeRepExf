@@ -5,11 +5,9 @@ namespace TestServer.Extensions
 {
     public static class MatchExtensions
     {
-        public static int GetIntGroup(this string path, HttpListenerContext context, string group)
+        public static int GetIntGroup(this Match match, string groupKey)
         {
-            var match = Regex.Match(context.Request.Url.AbsolutePath, path, RegexOptions.IgnoreCase);
-            var id = int.Parse(match.Groups[group].Value);
-            return id;
+            return int.Parse(match.Groups[groupKey].Value);
         }
     }
 }

@@ -1,13 +1,19 @@
 using EditTestClient.Api;
 using EditTestClient.Api.Extensions;
 using EditTestClient.Api.Helpers;
+using EditTestClient.Api.Questions;
 using EditTestClient.Api.Requests;
-using EditTestClient.Services;
+using EditTestClient.Api.Results;
+using EditTestClient.Api.Tests;
+using EditTestClient.Api.Users;
+using EditTestClient.Services.CalculateResults;
+using EditTestClient.Services.Questions;
+using EditTestClient.Services.Tests;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -32,12 +38,12 @@ namespace EditTestClient.ViewModel
         private int? questionIndex;
         private int currQuestionIndex;
 
-        private List<string> testsData;
+        private ObservableCollection<string> testsData;
 
         private string addingTestName;
         private string addingTestAttempts;
 
-        private List<string> addingQuestions;
+        private ObservableCollection<string> addingQuestions;
         private ImageSource questionImage;
         private string questionTaskText;
         private string questionAnswers;
@@ -51,7 +57,7 @@ namespace EditTestClient.ViewModel
         private string userResult;
         private string userAttempts;
 
-        private List<string> historySource;
+        private ObservableCollection<string> historySource;
 
         private bool authFormVanish;
         private bool chooseTestFormVanish;
@@ -94,11 +100,12 @@ namespace EditTestClient.ViewModel
         private ICommand showHistoryFormCommand;
         private ICommand backToResultFormCommand;
 
-        private bool editQuestionButtonWasClicked = false;
-        private bool addImageButtonWasClicked = false;
-        private bool editTestButtonWasClicked = false;
+        private bool editQuestionButtonWasClicked;
+        private bool addImageButtonWasClicked;
+        private bool editTestButtonWasClicked;
 
         private bool publishButtonClicked;
+        private bool publishTestButtonClickedForDisable;
 
         private string addOrUpdateQuestionButtonContent;
         private string addOrUpdateTestContent;
@@ -108,7 +115,7 @@ namespace EditTestClient.ViewModel
         {
             get => login;
             set => Set(ref login, value);
-        } 
+        }
         public string Password
         {
             get => password;
@@ -131,10 +138,10 @@ namespace EditTestClient.ViewModel
             set => Set(ref questionIndex, value);
         }
 
-        public List<string> TestsData
+        public ObservableCollection<string> TestsData
         {
             get => testsData;
-            set=> Set(ref testsData, value);
+            set => Set(ref testsData, value);
         }
         public string AddingTestName
         {
@@ -146,36 +153,36 @@ namespace EditTestClient.ViewModel
             get => addingTestAttempts;
             set => Set(ref addingTestAttempts, value);
         }
-        public List<string> AddingQuestions
+        public ObservableCollection<string> AddingQuestions
         {
             get => addingQuestions;
             set => Set(ref addingQuestions, value);
         }
-        
+
         public ImageSource QuestionImage
         {
             get => questionImage;
-            set=> Set(ref questionImage, value);
+            set => Set(ref questionImage, value);
         }
         public string QuestionTaskText
         {
             get => questionTaskText;
-            set=>Set(ref questionTaskText, value);
+            set => Set(ref questionTaskText, value);
         }
         public string QuestionAnswers
         {
             get => questionAnswers;
-            set=> Set(ref questionAnswers, value);
+            set => Set(ref questionAnswers, value);
         }
         public string QuestionRightAnswer
         {
-            get => questionRightAnswer; 
+            get => questionRightAnswer;
             set => Set(ref questionRightAnswer, value);
         }
         public string QuestionValueAnswer
         {
-            get=> questionValueAnswer;
-            set=> Set(ref questionValueAnswer, value);
+            get => questionValueAnswer;
+            set => Set(ref questionValueAnswer, value);
         }
 
         public string SolutionPartTestQuestion
@@ -194,16 +201,16 @@ namespace EditTestClient.ViewModel
             set => Set(ref solutionPartUserAnswer, value);
         }
 
-        public List<string> HistorySource
+        public ObservableCollection<string> HistorySource
         {
             get => historySource;
-            set=> Set(ref historySource, value);
+            set => Set(ref historySource, value);
         }
 
         public string UserResult
         {
             get => userResult;
-            set=> Set(ref userResult, value);
+            set => Set(ref userResult, value);
         }
         public string UserAttempts
         {
@@ -280,7 +287,7 @@ namespace EditTestClient.ViewModel
         public ICommand SolutionPartPrevQuestionCommand => solutionPartPrevQuestionCommand ?? (solutionPartPrevQuestionCommand = new AsyncRelayCommand(StudPartPrevQuestion));
         public ICommand SolutionPartNextQuestionCommand => solutionPartNextQuestionCommand ?? (solutionPartNextQuestionCommand = new AsyncRelayCommand(StudPartNextQuestion));
 
-        public ICommand BuildTestModeActivateCommand=> buildTestModeActivateCommand??(buildTestModeActivateCommand= new AsyncRelayCommand(ActivateBuildTestMode));
+        public ICommand BuildTestModeActivateCommand => buildTestModeActivateCommand ?? (buildTestModeActivateCommand = new AsyncRelayCommand(ActivateBuildTestMode));
         public ICommand StudentModeActivateCommand => studentModeActivateCommand ?? (studentModeActivateCommand = new AsyncRelayCommand(ActivateStudentMode));
 
         public ICommand BackToSelectModeFormCommand => backToSelectModeFormCommand ?? (backToSelectModeFormCommand = new RelayCommand(BackToSelectModeForm));
@@ -293,6 +300,12 @@ namespace EditTestClient.ViewModel
             get => publishButtonClicked;
             set => Set(ref publishButtonClicked, value);
         }
+        public bool PublishTestButtonClickedForDisable
+        {
+            get => publishTestButtonClickedForDisable;
+            set => Set(ref publishTestButtonClickedForDisable, value);
+        }
+
         public string AddOrUpdateQuestionButtonContent
         {
             get => addOrUpdateQuestionButtonContent;
@@ -314,27 +327,28 @@ namespace EditTestClient.ViewModel
         private readonly IUserApi userApi = new UserApi(BaseUri);
         private readonly IResultApi resultApi = new ResultApi(BaseUri);
 
-        private readonly IQuestionService questionService=new QuestionService();
-        private readonly ITestService testService=new TestService();
+        private readonly IQuestionService questionService = new QuestionService();
+        private readonly ITestService testService = new TestService();
         private readonly ICalculateResultService resultService = new CalculateResultService();
-        
+
         public MainViewModel()
         {
             AuthFormVanish = true;
-            ChooseTestFormVanish=false;
+            ChooseTestFormVanish = false;
             AddTestFormVanish = false;
-            AddOrEditQuestionFormVanish= false;
-            StudentPartSelectTestFormVanish= false;
+            AddOrEditQuestionFormVanish = false;
+            StudentPartSelectTestFormVanish = false;
             StudentPartSolveTestFormVanish = false;
             StudentPartResultFormVanish = false;
             TeacherSelectModeFormVanish = false;
             HistoryFormVanish = false;
             PublishButtonClicked = false;
+            PublishTestButtonClickedForDisable = true;
             AddOrUpdateQuestionButtonContent = "add question";
             AddOrUpdateTestContent = "publish test";
             NextQuestionButtonContent = "next question";
         }
-        
+
         private async Task MakeRegistration()
         {
             var statusCode = await userApi.CreateUser(new UserRequest() { Login = Login, Password = Password, UserType = "student" });
@@ -351,45 +365,43 @@ namespace EditTestClient.ViewModel
 
         private async Task MakeLogin()
         {
-            var statusCode = await userApi.LoginUser(new UserRequest() { Login = Login, Password = Password});
-            token=statusCode.Value.JWT.ToString();
-            clientUserRole=statusCode.Value.UserType.ToString();
-            if (statusCode.Key.Equals(HttpStatusCode.Conflict))
+            var statusCode = await userApi.LoginUser(new UserRequest() { Login = Login, Password = Password });
+            token = statusCode.user.JWT.ToString();
+            clientUserRole = statusCode.user.UserType.ToString();
+            if (!statusCode.statusCode.Equals(HttpStatusCode.OK))
             {
                 MessageBox.Show("something went wrong");
                 return;
             }
-            if (statusCode.Key.Equals(HttpStatusCode.OK))
+            var user = statusCode.user;
+            if (user.UserType.Equals(UserRoles.Student))
             {
-                var user=statusCode.Value;
-                if(user.UserType.Equals("student"))
+                var pair = await testApi.GetTests(token);
+                if (pair.statusCode == HttpStatusCode.Unauthorized)
                 {
-                    var pair = await testApi.GetTests(token);
-                    if (pair.Key == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("incorrect authorization");
-                    }
-                    else if (pair.Key == HttpStatusCode.Forbidden)
-                    {
-                        MessageBox.Show("unavailable functionality");
-                    }
-                    else
-                    {
-                        testService.TestBank = pair.Value;
-                        TestsData = ViewHelper.GetTests(pair.Value);
-                        AuthFormVanish = false;
-                        StudentPartSelectTestFormVanish = true;
-                    }
+                    MessageBox.Show("incorrect authorization");
                 }
-                if (user.UserType.Equals("teacher"))
+                else if (pair.statusCode == HttpStatusCode.Forbidden)
                 {
+                    MessageBox.Show("unavailable functionality");
+                }
+                else
+                {
+                    testService.TestBank = pair.tests;
+                    TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
                     AuthFormVanish = false;
-                    TeacherSelectModeFormVanish =true;
+                    StudentPartSelectTestFormVanish = true;
                 }
             }
+            if (user.UserType.Equals(UserRoles.Teacher))
+            {
+                AuthFormVanish = false;
+                TeacherSelectModeFormVanish = true;
+            }
+
         }
 
-        private  void AddTest()
+        private void AddTest()
         {
             ChooseTestFormVanish = false;
             AddTestFormVanish = true;
@@ -408,9 +420,9 @@ namespace EditTestClient.ViewModel
             if (editTestButtonWasClicked)
             {
                 var tests = await testApi.GetTests(token);
-                var localTests = ViewHelper.GetTests(tests.Value);
+                var localTests = ViewHelper.GetTests(tests.tests);
                 var localTestName = localTests[(int)TestViewIndex].Substring(0, localTests[(int)TestViewIndex].IndexOf(' '));
-                int testId = tests.Value.FirstOrDefault(x => x.Name == localTestName).Id;
+                int testId = tests.tests.FirstOrDefault(x => x.Name == localTestName).Id;
                 var updatedTest = await testApi.UpdateTest(new TestRequest()
                 {
                     Name = AddingTestName,
@@ -422,53 +434,57 @@ namespace EditTestClient.ViewModel
             else
             {
                 var testAdded = await testApi.AddTest(new TestRequest() { Name = AddingTestName, AttemptsCount = int.Parse(AddingTestAttempts) }, token);
-                if (testAdded.Equals(HttpStatusCode.OK))
+                if (!testAdded.Equals(HttpStatusCode.OK))
                 {
-                    var pair = await testApi.GetTests(token);
-                    if (pair.Key == HttpStatusCode.Unauthorized)
-                    {
-                        MessageBox.Show("incorrect authorization");
-                        return;
-                    }
-                    if (pair.Key == HttpStatusCode.Forbidden)
-                    {
-                        MessageBox.Show("unavailable functionality");
-                        return;
-                    }
-                    if (pair.Key == HttpStatusCode.Conflict)
-                    {
-                        MessageBox.Show("something went wrong");
-                        return;
-                    }
-                    MessageBox.Show($"you have added a test container {AddingTestName}\nnow fill it with questions");
-                    testService.TestBank = pair.Value;
-                    TestsData = ViewHelper.GetTests(pair.Value);
+                    MessageBox.Show("test with this name already exists");
+                    return;
                 }
+                var pair = await testApi.GetTests(token);
+                if (pair.statusCode == HttpStatusCode.Unauthorized)
+                {
+                    MessageBox.Show("incorrect authorization");
+                    return;
+                }
+                if (pair.statusCode == HttpStatusCode.Forbidden)
+                {
+                    MessageBox.Show("unavailable functionality");
+                    return;
+                }
+                if (pair.statusCode == HttpStatusCode.Conflict)
+                {
+                    MessageBox.Show("something went wrong");
+                    return;
+                }
+                MessageBox.Show($"you have added a test container {AddingTestName}\nnow fill it with questions");
+                testService.TestBank = pair.tests;
+                TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
+
+                PublishTestButtonClickedForDisable = false;
             }
             PublishButtonClicked = true;
         }
 
         private async Task EditTest()
         {
-            if(TestsData==null||TestsData.Count==0)
+            if (TestsData == null || TestsData.Count == 0)
             {
                 MessageBox.Show("There are no tests to edit");
                 return;
             }
-            if(TestViewIndex==null)
+            if (TestViewIndex == null)
             {
                 MessageBox.Show("select some test");
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.Value[(int)TestViewIndex].Id;
-            var testName = tests.Value[(int)TestViewIndex].Name;
-            var testAttempts = tests.Value[(int)TestViewIndex].AttemptsCount;
+            int testId = tests.tests[(int)TestViewIndex].Id;
+            var testName = tests.tests[(int)TestViewIndex].Name;
+            var testAttempts = tests.tests[(int)TestViewIndex].AttemptsCount;
             var questions = await questionApi.GetQuestions(testId, token);
             AddingTestName = testName;
             AddingTestAttempts = testAttempts.ToString();
-            questionService.QuestionBank = questions.Value;
-            AddingQuestions = ViewHelper.GetQuestions(questions.Value);
+            questionService.QuestionBank = questions.questions;
+            AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questions.questions));
             PublishButtonClicked = true;
             ChooseTestFormVanish = false;
             AddTestFormVanish = true;
@@ -484,15 +500,15 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.Value[(int)TestViewIndex].Id;
-            var deletedTest=await testApi.DeleteTest(testId, token);
+            int testId = tests.tests[(int)TestViewIndex].Id;
+            var deletedTest = await testApi.DeleteTest(testId, token);
             if (deletedTest.Equals(HttpStatusCode.OK)) MessageBox.Show("test was deleted");
             else MessageBox.Show("something went wrong");
             testService.TestBank.RemoveAt((int)TestViewIndex);
-            TestsData = ViewHelper.GetTests(testService.TestBank);
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(testService.TestBank));
         }
 
-        private  void AddQuestion()
+        private void AddQuestion()
         {
             AddTestFormVanish = false;
             AddOrEditQuestionFormVanish = true;
@@ -504,10 +520,10 @@ namespace EditTestClient.ViewModel
             QuestionValueAnswer = "";
             AddOrUpdateQuestionButtonContent = "add question";
         }
-        
+
         private async Task EditQuestion()
         {
-            if(questionService.QuestionBank.Count == 0)
+            if (questionService.QuestionBank.Count == 0)
             {
                 MessageBox.Show("There is no question to select");
                 return;
@@ -515,10 +531,10 @@ namespace EditTestClient.ViewModel
             if (QuestionIndex != null)
             {
                 var tests = await testApi.GetTests(token);
-                int testId = tests.Value.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+                int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.Value[(int)QuestionIndex].Id;
-                var concreteQuestion = await questionApi.GetConcreteQuestion(testId, questionId, token);
+                var questionId = questions.questions[(int)QuestionIndex].Id;
+                var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
                 QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
                 QuestionTaskText = concreteQuestion.Text;
                 QuestionAnswers = concreteQuestion.Answers;
@@ -542,17 +558,17 @@ namespace EditTestClient.ViewModel
             if (QuestionIndex != null)
             {
                 var tests = await testApi.GetTests(token);
-                int testId = tests.Value.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+                int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.Value[(int)QuestionIndex].Id;
+                var questionId = questions.questions[(int)QuestionIndex].Id;
                 var deletedQuestion = await questionApi.DeleteQuestion(testId, questionId, token);
                 if (deletedQuestion.Equals(HttpStatusCode.OK)) MessageBox.Show("question was deleted");
                 else MessageBox.Show("something went wrong");
                 questionService.QuestionBank.RemoveAt((int)QuestionIndex);
-                AddingQuestions = ViewHelper.GetQuestions(questionService.QuestionBank);
-            } 
+                AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questionService.QuestionBank));
+            }
         }
-        
+
         private void AddQuestionImage()
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -581,12 +597,12 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.Value.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+            int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
             if (editQuestionButtonWasClicked)
             {
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.Value[(int)QuestionIndex].Id;
-                var concreteQuestion = await questionApi.GetConcreteQuestion(testId, questionId, token);
+                var questionId = questions.questions[(int)QuestionIndex].Id;
+                var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
                 HttpStatusCode updatedQuestion;
                 if (addImageButtonWasClicked)
                 {
@@ -613,8 +629,8 @@ namespace EditTestClient.ViewModel
                 if (updatedQuestion.Equals(HttpStatusCode.OK))
                 {
                     var questionsToView = await questionApi.GetQuestions(testId, token);
-                    questionService.QuestionBank = questionsToView.Value;
-                    AddingQuestions = ViewHelper.GetQuestions(questionService.QuestionBank);
+                    questionService.QuestionBank = questionsToView.questions;
+                    AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questionService.QuestionBank));
                 }
                 AddOrUpdateQuestionButtonContent = "add question";
             }
@@ -631,8 +647,8 @@ namespace EditTestClient.ViewModel
                 if (addedQuestion.Equals(HttpStatusCode.OK))
                 {
                     var questionsToView = await questionApi.GetQuestions(testId, token);
-                    questionService.QuestionBank = questionsToView.Value;
-                    AddingQuestions = ViewHelper.GetQuestions(questionService.QuestionBank);
+                    questionService.QuestionBank = questionsToView.questions;
+                    AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questionService.QuestionBank));
                 }
             }
             QuestionImage = null;
@@ -643,7 +659,7 @@ namespace EditTestClient.ViewModel
             AddTestFormVanish = true;
             AddOrEditQuestionFormVanish = false;
             addImageButtonWasClicked = false;
-            QuestionIndex = null;  
+            QuestionIndex = null;
         }
 
         private void BackToAddTestForm()
@@ -655,27 +671,28 @@ namespace EditTestClient.ViewModel
 
         private async void BackToChooseTestForm()
         {
-            ChooseTestFormVanish= true;
+            ChooseTestFormVanish = true;
             AddTestFormVanish = false;
             AddingQuestions = null;
             AddingTestName = "";
             AddingTestAttempts = "";
             PublishButtonClicked = false;
-            var tests=await testApi.GetTests(token);
-            TestsData = ViewHelper.GetTests(tests.Value);
+            var tests = await testApi.GetTests(token);
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.tests));
             AddOrUpdateTestContent = "publish test";
-            editTestButtonWasClicked = false; 
+            editTestButtonWasClicked = false;
+            PublishTestButtonClickedForDisable = true;
         }
 
         private void BackToAuthForm()
         {
-            AuthFormVanish=true;
+            AuthFormVanish = true;
             ChooseTestFormVanish = false;
             StudentPartSelectTestFormVanish = false;
-            TeacherSelectModeFormVanish= false;
+            TeacherSelectModeFormVanish = false;
             TestsData = null;
         }
-        
+
         private async Task StudPartSelectTest()
         {
             currQuestionIndex = 0;
@@ -685,23 +702,23 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            var test = tests.Value[(int)TestViewIndex];
+            var test = tests.tests[(int)TestViewIndex];
             int testId = test.Id;
             var resultHistory = await resultApi.GetResults(testId, token);
-            if(test.AttemptsCount - resultHistory.Value.Count()==0)
+            if (test.AttemptsCount - resultHistory.results.Count() == 0)
             {
                 MessageBox.Show("you have run out of attempts to pass");
                 return;
             }
             var questions = await questionApi.GetQuestions(testId, token);
-            questionService.QuestionBank = questions.Value;
+            questionService.QuestionBank = questions.questions;
             resultService.InitializeRightAnswers(questionService.QuestionBank);
             var localQuestion = questionService.QuestionBank[0];
-            int questionId = questions.Value.FirstOrDefault(x => x.Text.Equals(localQuestion.Text)).Id;
-            var concreteQuestion = await questionApi.GetConcreteQuestion(testId, questionId, token);
+            int questionId = questions.questions.FirstOrDefault(x => x.Text.Equals(localQuestion.Text)).Id;
+            var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
-            SolutionPartTestAnswerVariants = ViewHelper.ListToString(ViewHelper.GetAnswers(concreteQuestion.Answers));  
+            SolutionPartTestAnswerVariants = ViewHelper.ListToString(ViewHelper.GetAnswers(concreteQuestion.Answers));
             StudentPartSolveTestFormVanish = true;
             StudentPartSelectTestFormVanish = false;
         }
@@ -712,7 +729,7 @@ namespace EditTestClient.ViewModel
             UserResult = "";
             UserAttempts = "";
             SolutionPartUserAnswer = "";
-            TestsData = ViewHelper.GetTests(tests.Value);
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.tests));
             StudentPartSolveTestFormVanish = false;
             StudentPartResultFormVanish = false;
             StudentPartSelectTestFormVanish = true;
@@ -720,7 +737,7 @@ namespace EditTestClient.ViewModel
             resultService.RightAnswers.Clear();
             currQuestionIndex = 0;
         }
-        
+
         private async Task StudPartPrevQuestion()
         {
             if (currQuestionIndex == 0)
@@ -731,20 +748,20 @@ namespace EditTestClient.ViewModel
             currQuestionIndex--;
             var currQuestion = questionService.QuestionBank[currQuestionIndex];
             var tests = await testApi.GetTests(token);
-            int testId = tests.Value.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
-            var concreteQuestion = await questionApi.GetConcreteQuestion(testId, currQuestion.Id, token);
+            int testId = tests.tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
+            var concreteQuestion = await questionApi.GetQuestion(testId, currQuestion.Id, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
             SolutionPartTestAnswerVariants = ViewHelper.ListToString(ViewHelper.GetAnswers(concreteQuestion.Answers));
             if (currQuestionIndex < resultService.UserAnswers.Count())
                 SolutionPartUserAnswer = ViewHelper.ListToString(resultService.UserAnswers[currQuestionIndex]);
-            else SolutionPartUserAnswer = ""; 
+            else SolutionPartUserAnswer = "";
         }
 
         private async Task StudPartNextQuestion()
         {
-            resultService.AddOrUpdateUserAnswer(currQuestionIndex,SolutionPartUserAnswer);
-            if(currQuestionIndex.Equals(questionService.QuestionBank.Count-2))
+            resultService.AddOrUpdateUserAnswer(currQuestionIndex, SolutionPartUserAnswer);
+            if (currQuestionIndex.Equals(questionService.QuestionBank.Count - 2))
             {
                 NextQuestionButtonContent = "complete the test";
             }
@@ -754,11 +771,11 @@ namespace EditTestClient.ViewModel
                 UserResult = resultService.CalculateResult().ToString();
                 var question = questionService.QuestionBank[0];
                 var resTests = await testApi.GetTests(token);
-                int resTestId = resTests.Value.FirstOrDefault(x => x.Name == question.TestName).Id;
-                await resultApi.AddResult(resTestId,int.Parse(UserResult), token);
-                int testAttempts = resTests.Value.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
+                int resTestId = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).Id;
+                await resultApi.AddResult(resTestId, int.Parse(UserResult), token);
+                int testAttempts = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
                 var resultHistory = await resultApi.GetResults(resTestId, token);
-                UserAttempts = (testAttempts- resultHistory.Value.Count()).ToString();
+                UserAttempts = (testAttempts - resultHistory.results.Count()).ToString();
                 StudentPartSolveTestFormVanish = false;
                 StudentPartResultFormVanish = true;
                 return;
@@ -766,32 +783,32 @@ namespace EditTestClient.ViewModel
             currQuestionIndex++;
             var currQuestion = questionService.QuestionBank[currQuestionIndex];
             var tests = await testApi.GetTests(token);
-            int testId = tests.Value.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
-            var concreteQuestion = await questionApi.GetConcreteQuestion(testId, currQuestion.Id, token);
+            int testId = tests.tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
+            var concreteQuestion = await questionApi.GetQuestion(testId, currQuestion.Id, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
             SolutionPartTestAnswerVariants = ViewHelper.ListToString(ViewHelper.GetAnswers(concreteQuestion.Answers));
             if (currQuestionIndex < resultService.UserAnswers.Count())
                 SolutionPartUserAnswer = ViewHelper.ListToString(resultService.UserAnswers[currQuestionIndex]);
-            else SolutionPartUserAnswer = "";          
+            else SolutionPartUserAnswer = "";
         }
 
         private async Task ActivateBuildTestMode()
         {
             TeacherSelectModeFormVanish = false;
             var pair = await testApi.GetTests(token);
-            if (pair.Key == HttpStatusCode.Unauthorized)
+            if (pair.statusCode == HttpStatusCode.Unauthorized)
             {
                 MessageBox.Show("incorrect authorization");
                 return;
             }
-            if (pair.Key == HttpStatusCode.Forbidden)
+            if (pair.statusCode == HttpStatusCode.Forbidden)
             {
                 MessageBox.Show("unavailable functionality");
                 return;
             }
-            testService.TestBank = pair.Value;
-            TestsData = ViewHelper.GetTests(pair.Value);
+            testService.TestBank = pair.tests;
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
             AuthFormVanish = false;
             ChooseTestFormVanish = true;
         }
@@ -800,18 +817,18 @@ namespace EditTestClient.ViewModel
         {
             TeacherSelectModeFormVanish = false;
             var pair = await testApi.GetTests(token);
-            if (pair.Key == HttpStatusCode.Unauthorized)
+            if (pair.statusCode == HttpStatusCode.Unauthorized)
             {
                 MessageBox.Show("incorrect authorization");
                 return;
             }
-            if (pair.Key == HttpStatusCode.Forbidden)
+            if (pair.Item1 == HttpStatusCode.Forbidden)
             {
                 MessageBox.Show("unavailable functionality");
                 return;
             }
-            testService.TestBank = pair.Value;
-            TestsData = ViewHelper.GetTests(pair.Value);
+            testService.TestBank = pair.tests;
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
             AuthFormVanish = false;
             StudentPartSelectTestFormVanish = true;
         }
@@ -833,19 +850,19 @@ namespace EditTestClient.ViewModel
         {
             var question = questionService.QuestionBank[0];
             var resTests = await testApi.GetTests(token);
-            int resTestId = resTests.Value.FirstOrDefault(x => x.Name == question.TestName).Id;
+            int resTestId = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).Id;
             await resultApi.AddResult(resTestId, int.Parse(UserResult), token);
-            int testAttempts = resTests.Value.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
+            int testAttempts = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
             var resultHistory = await resultApi.GetResults(resTestId, token);
-            HistorySource = ViewHelper.GetResults(resultHistory.Value);
+            HistorySource = new ObservableCollection<string>(ViewHelper.GetResults(resultHistory.results));
             HistoryFormVanish = true;
             StudentPartResultFormVanish = false;
         }
 
         private void BackToResultForm()
         {
-            HistoryFormVanish=false;
-            StudentPartResultFormVanish=true;
+            HistoryFormVanish = false;
+            StudentPartResultFormVanish = true;
         }
     }
 }

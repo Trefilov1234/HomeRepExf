@@ -20,11 +20,11 @@ namespace EditTestClient.Api.Helpers
                     bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
                     bmpBytes = ms.GetBuffer();
                 }
-               
+
             }
             return bmpBytes;
         }
-        
+
         public static BitmapSource BitmapToBitmapSource(Bitmap source)
         {
             if (source == null) return null;
@@ -37,7 +37,7 @@ namespace EditTestClient.Api.Helpers
 
         public static Bitmap ByteToBitMap(byte[] image)
         {
-            if(image==null) return null;
+            if (image == null) return null;
             Bitmap bmp;
             using (var ms = new MemoryStream(image))
             {

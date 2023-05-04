@@ -7,11 +7,11 @@ using TestServer.Context;
 using TestServer.Domain.Entities;
 using TestServer.Services.DTO;
 
-namespace TestServer.Services
+namespace TestServer.Services.Results
 {
-    public class ResultService: IResultService
+    public class ResultService : IResultService
     {
-        public async Task<bool> AddResult(int testId,string login,int result)
+        public async Task<bool> AddResult(int testId, string login, int result)
         {
             using var db = new TestContext();
             var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));
@@ -33,7 +33,7 @@ namespace TestServer.Services
             return true;
         }
 
-        public async Task<List<CustomResultDTO>> GetResults(int testId,string login)
+        public async Task<List<CustomResultDTO>> GetResults(int testId, string login)
         {
             using var db = new TestContext();
             var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));

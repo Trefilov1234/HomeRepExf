@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EditTestClient.Services
+namespace EditTestClient.Services.Questions
 {
-    public class QuestionService:IQuestionService
+    public class QuestionService : IQuestionService
     {
         public List<QuestionResponse> QuestionBank { get; set; }
         public string ImagePath { get; set; }
-        public QuestionService() 
+        public QuestionService()
         {
-            QuestionBank=new List<QuestionResponse>();
+            QuestionBank = new List<QuestionResponse>();
         }
 
-        public bool AddQuestion(byte[] image,string task,string answers,string rightAnswer,int answerValue)
+        public bool AddQuestion(byte[] image, string task, string answers, string rightAnswer, int answerValue)
         {
-            if (QuestionBank.FirstOrDefault(x=>x.Text.Equals(task))==null)
+            if (QuestionBank.FirstOrDefault(x => x.Text.Equals(task)) == null)
             {
                 QuestionBank.Add(new QuestionResponse()
                 {
@@ -33,10 +33,10 @@ namespace EditTestClient.Services
             }
         }
 
-        public bool UpdateQuestion(int index,byte[] image, string task, string answers, string rightAnswer, int answerValue)
+        public bool UpdateQuestion(int index, byte[] image, string task, string answers, string rightAnswer, int answerValue)
         {
-            var tasks= QuestionBank.Select(x => x.Text).ToList();  
-            if(tasks.Contains(task)&&tasks.IndexOf(task)!=index)
+            var tasks = QuestionBank.Select(x => x.Text).ToList();
+            if (tasks.Contains(task) && tasks.IndexOf(task) != index)
             {
                 return false;
             }

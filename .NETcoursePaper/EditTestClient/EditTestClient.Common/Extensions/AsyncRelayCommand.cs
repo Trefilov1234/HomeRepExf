@@ -55,7 +55,7 @@ namespace EditTestClient.Api.Extensions
             {
                 Interlocked.Exchange(ref isExecuting, 0);
                 RaiseCanExecuteChanged();
-                //}
+
             }
         }
     }

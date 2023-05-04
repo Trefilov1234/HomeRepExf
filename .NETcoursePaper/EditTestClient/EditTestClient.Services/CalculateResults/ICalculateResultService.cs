@@ -1,11 +1,11 @@
 ﻿using EditTestClient.Api.Responses;
 using System.Collections.Generic;
 
-namespace EditTestClient.Services
+namespace EditTestClient.Services.CalculateResults
 {
     public interface ICalculateResultService
     {
-        public List<KeyValuePair<int, List<int>>> RightAnswers { get; set; }
+        public List<(int answerValue, List<int> rightAnswers)> RightAnswers { get; set; }
         public Dictionary<int, List<int>> UserAnswers { get; set; }
 
         public void InitializeRightAnswers(List<QuestionResponse> questions);

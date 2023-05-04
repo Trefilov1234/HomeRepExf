@@ -5,12 +5,12 @@ using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace EditTestClient.Api
+namespace EditTestClient.Api.Users
 {
     public interface IUserApi
     {
         public Task<HttpResponseMessage> CreateUser(UserRequest user);
 
-        public Task<KeyValuePair<HttpStatusCode, UserResponse>> LoginUser(UserRequest user);
+        public Task<(HttpStatusCode statusCode, UserResponse user)> LoginUser(UserRequest user);
     }
 }
