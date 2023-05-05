@@ -12,17 +12,15 @@ namespace EditTestClient.Api.Users
     {
         public UserApi(string baseUri) : base(baseUri) { }
 
-        public Task<HttpResponseMessage> CreateUser(UserRequest user)
+        public Task<HttpStatusCode> CreateUser(UserRequest user)
         {
             return SendAsync(HttpMethod.Post, "/users", null, body: user);
         }
 
         public async Task<(HttpStatusCode StatusCode, UserResponse User)> LoginUser(UserRequest user)
         {
-            var response = await SendAsync(HttpMethod.Post, "/login", null, body: user);
-            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var userResp = JsonSerializeHelper.Deserialize<UserResponse>(responseBody);
-            return (response.StatusCode, userResp);
+			// todo(v): сделать так как тут для остальных методов, где есть десериализация
+			return await SendAsync<UserResponse>(HttpMethod.Post, "/login", null, body: user);
         }
     }
 }

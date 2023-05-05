@@ -5,7 +5,8 @@ using System.Windows.Input;
 
 namespace EditTestClient.Api.Extensions
 {
-    public class AsyncRelayCommand : ICommand
+	// todo(v): перенести либо в EditTestClient папка Commands, либо в EditTestClient.Wpf.Common
+	public class AsyncRelayCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {

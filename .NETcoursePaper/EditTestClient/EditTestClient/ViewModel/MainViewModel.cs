@@ -24,7 +24,8 @@ using System.Windows.Media.Imaging;
 
 namespace EditTestClient.ViewModel
 {
-    public class MainViewModel : ViewModelBase
+	// todo(v): разбить логику MainViewModel на несколько контролов
+	public class MainViewModel : ViewModelBase
     {
         private const string BaseUri = "http://127.0.0.1:8888";
 
@@ -218,6 +219,7 @@ namespace EditTestClient.ViewModel
             set => Set(ref userAttempts, value);
         }
 
+        // todo(v): Использовать enum и EnumToVisibilityConverter
         public bool AuthFormVanish
         {
             get => authFormVanish;
@@ -352,11 +354,11 @@ namespace EditTestClient.ViewModel
         private async Task MakeRegistration()
         {
             var statusCode = await userApi.CreateUser(new UserRequest() { Login = Login, Password = Password, UserType = "student" });
-            if (statusCode.StatusCode.Equals(HttpStatusCode.Conflict))
+            if (statusCode.Equals(HttpStatusCode.Conflict))
             {
                 RegStatus = "such a user already exists";
             }
-            else if (statusCode.StatusCode.Equals(HttpStatusCode.Created))
+            else if (statusCode.Equals(HttpStatusCode.Created))
             {
                 RegStatus = "you have been successfully registered";
             }

@@ -25,7 +25,8 @@ namespace TestServer.Commands
         public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
             int id = path.GetIntGroup(testId);
-            var requestBody = await context.GetRequestBodyAsync().ConfigureAwait(false);
+			// todo(v): мб как-то обобщить?
+			var requestBody = await context.GetRequestBodyAsync().ConfigureAwait(false);
             if (!JsonSerializeHelper.TryDeserialize<QuestionRequest>(requestBody, out var questionRequest))
             {
                 await context.WriteResponseAsync(400, "Invalid request body content").ConfigureAwait(false);

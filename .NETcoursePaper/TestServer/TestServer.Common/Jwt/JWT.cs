@@ -9,7 +9,8 @@ using TestServer.Common.Jwt;
 
 namespace TestServer.Common.Extensions
 {
-    public static class JWT
+	// todo(v): сделать не static и сохранить в приватных полях Issuer и SecurityKey
+	public static class JWT
     {
         private const string BearerPrefix = "Bearer ";
 
@@ -52,9 +53,11 @@ namespace TestServer.Common.Extensions
             {
                 ValidateLifetime = false,
                 ValidateAudience = false,
-                ValidateIssuer = false,
+				// todo(v): true
+				ValidateIssuer = false,
                 ValidIssuer = ConfigurationTokens.Issuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.SecurityKey))
+				// todo(v): использовать static
+				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(ConfigurationTokens.SecurityKey))
             };
         }
     }

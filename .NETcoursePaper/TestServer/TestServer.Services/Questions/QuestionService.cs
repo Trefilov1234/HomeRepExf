@@ -22,9 +22,9 @@ namespace TestServer.Services.Questions
             catch (Exception)
             {
                 return false;
-            }
+			}
             return true;
-        }
+		}
 
         public async Task<List<Question>> GetQuestions(int testId)
         {
@@ -50,14 +50,16 @@ namespace TestServer.Services.Questions
         public async Task<Question> GetQuestionById(int questionId, int testId)
         {
             using var db = new TestContext();
-            var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));
+			// todo(v): для поиска Question не нужен testId
+			var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));
             return question;
         }
 
         public async Task<bool> DeleteQuestion(int questionId, int testId)
         {
             using var db = new TestContext();
-            var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));
+			// todo(v): для поиска Question не нужен testId
+			var question = await db.Questions.FirstOrDefaultAsync(x => x.TestId.Equals(testId) && x.Id.Equals(questionId));
             if (question == null) return false;
             db.Questions.Remove(question);
             await db.SaveChangesAsync();

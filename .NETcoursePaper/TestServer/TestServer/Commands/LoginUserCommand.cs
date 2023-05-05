@@ -32,18 +32,24 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(400, "Invalid request body content").ConfigureAwait(false);
                 return;
             }
-            var user = userRequest.ToEntity();
+
+			// todo(v): если не собираешься создавать новую запись в бд, то лучше не создавать entity
+			var user = userRequest.ToEntity();
             string userType;
-            using (var db = new TestContext())
+
+			// todo(v): использовать _userService.GetUser(userRequest.Login)
+			using (var db = new TestContext())
             {
                 userType = db.Users.FirstOrDefault(x => x.Login.Equals(user.Login)).UserType;
             }
+
             var isSuccess = _userService.CheckUser(user);
             if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);
                 return;
             }
+
             await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(new UserResponse()
             {
                 JWT = JWT.GetToken(user.Login, userType),

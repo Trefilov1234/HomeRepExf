@@ -43,7 +43,9 @@ namespace TestServer.Commands
             List<QuestionResponseDTO> responses = new();
             foreach (var el in isSuccess)
             {
-                responses.Add(new QuestionResponseDTO() { Text = el.Text, Answers = el.Answers, RightAnswer = el.RightAnswer, AnswerValue = el.AnswerValue, Id = el.Id, TestName = el.Test.Name });
+				// todo(v): вынести в extensions
+				// todo(v): слово DTO в названии класса лишнее
+				responses.Add(new QuestionResponseDTO() { Text = el.Text, Answers = el.Answers, RightAnswer = el.RightAnswer, AnswerValue = el.AnswerValue, Id = el.Id, TestName = el.Test.Name });
             }
             await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(responses)).ConfigureAwait(false);
         }

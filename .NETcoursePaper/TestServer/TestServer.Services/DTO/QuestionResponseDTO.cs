@@ -1,6 +1,7 @@
 ﻿namespace TestServer.Services.DTO
 {
-    public class QuestionResponseDTO
+	// todo(v): перенести в TestServer
+	public class QuestionResponseDTO
     {
         public int Id { get; set; }
         public byte[] Image { get; set; }

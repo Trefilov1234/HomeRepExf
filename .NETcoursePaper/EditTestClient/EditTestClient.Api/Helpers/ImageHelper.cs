@@ -9,7 +9,8 @@ namespace EditTestClient.Api.Helpers
     public static class ImageHelper
     {
         public static byte[] ImageToByte(string path)
-        {
+		{
+			// todo(v): мб return File.ReadAllBytes(path); ?
             if (string.IsNullOrEmpty(path)) return null;
             byte[] bmpBytes;
             using (var ms = new MemoryStream())
@@ -25,7 +26,8 @@ namespace EditTestClient.Api.Helpers
             return bmpBytes;
         }
 
-        public static BitmapSource BitmapToBitmapSource(Bitmap source)
+		// todo(v): мб объединить с ByteToBitMap? или сделать третий метод, который будет вызывать оба
+		public static BitmapSource BitmapToBitmapSource(Bitmap source)
         {
             if (source == null) return null;
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(

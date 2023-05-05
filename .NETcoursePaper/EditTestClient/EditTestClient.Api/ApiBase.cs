@@ -1,6 +1,7 @@
 ﻿using EditTestClient.Api.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -17,39 +18,50 @@ namespace EditTestClient.Api
             _httpClient = new HttpClient();
         }
 
-        protected async Task<HttpResponseMessage> SendAsync(
+        protected async Task<HttpStatusCode> SendAsync(
             HttpMethod method,
             string path,
             string token,
             Dictionary<string, string> parameters = null,
             object body = null)
-        {
-            var uri = RequestUriHelper.GetUriWithQueryString(_baseUri + path, parameters);
-
-            var request = new HttpRequestMessage(method, uri);
-            if (!string.IsNullOrEmpty(token))
-                request.Headers.Add(AuthorizationHeaderKey, $"Bearer {token}");
-            if (body != null)
-                request.Content = new StringContent(JsonSerializeHelper.Serialize(body));
-
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-
-            return response;
+		{
+			var response = await SendInternalAsync(method, path, token, parameters, body).ConfigureAwait(false);
+			return response.StatusCode;
         }
 
-        protected async Task<TResult> SendAsync<TResult>(
+        protected async Task<(HttpStatusCode StatusCode, TResult Value)> SendAsync<TResult>(
             HttpMethod method,
             string path,
             string token,
             Dictionary<string, string> parameters = null,
             object body = null)
         {
-            var response = await SendAsync(method, path, token, parameters, body).ConfigureAwait(false);
+            var response = await SendInternalAsync(method, path, token, parameters, body).ConfigureAwait(false);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return JsonSerializeHelper.Deserialize<TResult>(responseBody);
-        }
+            return (response.StatusCode, JsonSerializeHelper.Deserialize<TResult>(responseBody));
+		}
 
-        public void Dispose()
+		private async Task<HttpResponseMessage> SendInternalAsync(
+			HttpMethod method,
+			string path,
+			string token,
+			Dictionary<string, string> parameters,
+			object body)
+		{
+			var uri = RequestUriHelper.GetUriWithQueryString(_baseUri + path, parameters);
+
+			var request = new HttpRequestMessage(method, uri);
+			if (!string.IsNullOrEmpty(token))
+				request.Headers.Add(AuthorizationHeaderKey, $"Bearer {token}");
+			if (body != null)
+				request.Content = new StringContent(JsonSerializeHelper.Serialize(body));
+
+			var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+
+			return response;
+		}
+
+		public void Dispose()
         {
             _httpClient.Dispose();
         }

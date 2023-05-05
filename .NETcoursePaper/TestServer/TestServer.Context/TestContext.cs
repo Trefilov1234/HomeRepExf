@@ -15,8 +15,13 @@ namespace TestServer.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Question>().HasRequired(de => de.Test).WithMany(de => de.Questions).HasForeignKey(de => de.TestId);
-            modelBuilder.Entity<Test>().HasRequired(de => de.User).WithMany(de => de.Tests).HasForeignKey(de => de.UserId);
+			modelBuilder.Entity<Question>()
+				.HasRequired(de => de.Test)
+				.WithMany(de => de.Questions)
+				.HasForeignKey(de => de.TestId);
+
+			// todo(v): разделить на строки
+			modelBuilder.Entity<Test>().HasRequired(de => de.User).WithMany(de => de.Tests).HasForeignKey(de => de.UserId);
             modelBuilder.Entity<UserResult>().HasRequired(de => de.User).WithMany(de => de.UserResults).HasForeignKey(de => de.UserId).WillCascadeOnDelete(false);
             modelBuilder.Entity<UserResult>().HasRequired(de => de.Test).WithMany(de => de.UserResults).HasForeignKey(de => de.TestId).WillCascadeOnDelete(false);
             base.OnModelCreating(modelBuilder);

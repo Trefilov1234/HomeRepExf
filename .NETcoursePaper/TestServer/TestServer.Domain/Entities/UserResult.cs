@@ -3,6 +3,7 @@
     public class UserResult
     {
         public int Id { get; set; }
+        // todo: PassedBy?User?
         public int UserId { get; set; }
         public User User { get; set; }
         public int TestId { get; set; }

@@ -5,6 +5,8 @@ namespace EditTestClient.Services.Tests
 {
     public interface ITestService
     {
-        public List<TestResponse> TestBank { get; set; }
+		// todo(v): вместо этого списка можно использовать список во VM в ObservableCollection
+		// todo(v): хранить данные лучше не в TestResponse, а в TestModel
+		public List<TestResponse> TestBank { get; set; }
     }
 }

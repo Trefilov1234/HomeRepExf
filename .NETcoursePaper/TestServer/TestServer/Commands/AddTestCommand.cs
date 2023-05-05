@@ -42,7 +42,8 @@ namespace TestServer.Commands
                 return;
             }
             var test = testRequest.ToEntity();
-            var isSuccess = await _testService.AddTest(test, jwtData.Login);
+			// todo(v): проверить наличие теста
+			var isSuccess = await _testService.AddTest(test, jwtData.Login);
             if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);

@@ -46,7 +46,8 @@ namespace EditTestClient.Common.Extensions
         }
     }
 
-    [MarkupExtensionReturnType(typeof(IValueConverter))]
+	// todo: в отдельный файл
+	[MarkupExtensionReturnType(typeof(IValueConverter))]
     public abstract class MarkupConverterBase : MarkupExtension, IValueConverter
     {
         public override object ProvideValue(IServiceProvider serviceProvider)

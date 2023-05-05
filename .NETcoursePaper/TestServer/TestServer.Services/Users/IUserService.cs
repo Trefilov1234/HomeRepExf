@@ -5,7 +5,8 @@ namespace TestServer.Services.Users
 {
     public interface IUserService
     {
-        public Task<bool> AddUserBD(User user);
+		// todo(v): удалить "BD"
+		public Task<bool> AddUserBD(User user);
         public bool CheckUser(User user);
     }
 }

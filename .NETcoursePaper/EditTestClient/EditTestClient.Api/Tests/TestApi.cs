@@ -14,8 +14,7 @@ namespace EditTestClient.Api.Tests
 
         public async Task<HttpStatusCode> AddTest(TestRequest test, string token)
         {
-            var response = await SendAsync(HttpMethod.Post, "/tests", token, body: test);
-            return response.StatusCode;
+			return await SendAsync(HttpMethod.Post, "/tests", token, body: test);
         }
 
         public async Task<HttpStatusCode> DeleteTest(int testId, string token)
@@ -30,13 +29,15 @@ namespace EditTestClient.Api.Tests
             return response.StatusCode;
         }
 
-        public async Task<(HttpStatusCode StatusCode, List<TestResponse> Tests)> GetTests(string token)
+        public Task<(HttpStatusCode StatusCode, List<TestResponse> Tests)> GetTests(string token)
         {
-            var response = await SendAsync(HttpMethod.Get, "/tests", token);
-            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var testResp = JsonSerializeHelper.Deserialize<List<TestResponse>>(responseBody);
-            return (response.StatusCode,testResp);
-        }
+            //var response = await SendAsync(HttpMethod.Get, "/tests", token);
+            //var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            //var testResp = JsonSerializeHelper.Deserialize<List<TestResponse>>(responseBody);
+            //return (response.StatusCode,testResp);
+            // todo(v): теперь будет выглядеть так
+            return SendAsync<List<TestResponse>>(HttpMethod.Get, "/tests", token);
+		}
 
         public async Task<(HttpStatusCode StatusCode, TestResponse Test)> GetTest(int id, string token)
         {

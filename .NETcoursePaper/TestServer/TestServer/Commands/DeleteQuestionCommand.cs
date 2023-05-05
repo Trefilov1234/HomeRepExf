@@ -10,7 +10,8 @@ namespace TestServer.Commands
 {
     public class DeleteQuestionCommand : ICommand
     {
-        private const string testId = "testId";
+		// todo(v): переименовать
+		private const string testId = "testId";
         private const string questionId = "questionId";
         public string Path => @$"/tests/(?<{testId}>\d+)/questions/(?<{questionId}>\d+)";
         public HttpMethod Method => HttpMethod.Delete;
@@ -23,7 +24,8 @@ namespace TestServer.Commands
         }
         public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
-            var question_id = path.GetIntGroup(questionId);
+			// todo(v): переименовать
+			var question_id = path.GetIntGroup(questionId);
             var test_id = path.GetIntGroup(testId);
             var tokenReq = context.Request.Headers.Get("Authorization");
             var jwtData = JWT.ValidateToken(tokenReq);

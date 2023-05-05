@@ -47,6 +47,7 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(200, JsonSerializeHelper.Serialize(responses)).ConfigureAwait(false);
                 return;
             }
+            // todo: переименовать
             var isSuccess = await _testService.GetTests();
             if (isSuccess == null)
             {

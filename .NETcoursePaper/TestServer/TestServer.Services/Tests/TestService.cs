@@ -10,12 +10,16 @@ namespace TestServer.Services.Tests
 {
     public class TestService : ITestService
     {
-        public async Task<bool> AddTest(Test test, string login)
+		// todo(v): добавить проверку наличия теста IsTestExists(string name)
+
+		// todo(v): передавать (Test test, string userId)
+		public async Task<bool> AddTest(Test test, string login)
         {
             using var db = new TestContext();
             var curUser = db.Users.FirstOrDefault(x => x.Login == login);
             if (curUser == null) return false;
-            var curTest = db.Tests.FirstOrDefault(x => x.Name.Equals(test.Name));
+			// todo(v): вместо проверки тут стоит вызвать IsTestExists перед AddTest
+			var curTest = db.Tests.FirstOrDefault(x => x.Name.Equals(test.Name));
             if (curTest != null)
             {
                 return false;
@@ -26,7 +30,8 @@ namespace TestServer.Services.Tests
             return true;
         }
 
-        public async Task<List<Test>> GetTests(string login)
+		// todo(v): userId вместо login
+		public async Task<List<Test>> GetTests(string login)
         {
             using var db = new TestContext();
             var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));
@@ -51,9 +56,10 @@ namespace TestServer.Services.Tests
         public async Task<bool> DeleteTestById(int id)
         {
             using var db = new TestContext();
-            var curTest = await db.Tests.FirstOrDefaultAsync(x => x.Id == id);
-            if (curTest == null) return false;
-            db.Tests.Remove(curTest);
+			// todo(v):
+			//var curTest = await db.Tests.FirstOrDefaultAsync(x => x.Id == id);
+			//if (curTest == null) return false;
+			db.Tests.Remove(new Test { Id = id });
             await db.SaveChangesAsync();
             return true;
         }

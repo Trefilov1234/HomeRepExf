@@ -30,7 +30,10 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
             }
-            var isSuccess = await _testService.DeleteTestById(id);
+
+			// todo(v): в методе DeleteTestById не проверять наличие сущности.
+			// ? Перед вызовом DeleteTestById проверять наличие сущности
+			var isSuccess = await _testService.DeleteTestById(id);
             if (!isSuccess)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);

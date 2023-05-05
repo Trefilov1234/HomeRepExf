@@ -2,7 +2,8 @@
 {
     public class JwtData
     {
-        public bool IsFaulted { get; set; }
+		// todo(v): добавить Id юзера
+		public bool IsFaulted { get; set; }
         public string Login { get; set; }
         public string UserRole { get; set; }
     }

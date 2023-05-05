@@ -9,7 +9,7 @@ namespace EditTestClient.Api.Users
 {
     public interface IUserApi
     {
-        public Task<HttpResponseMessage> CreateUser(UserRequest user);
+        public Task<HttpStatusCode> CreateUser(UserRequest user);
 
         public Task<(HttpStatusCode StatusCode, UserResponse User)> LoginUser(UserRequest user);
     }

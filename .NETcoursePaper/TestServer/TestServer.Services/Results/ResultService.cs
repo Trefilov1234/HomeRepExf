@@ -14,7 +14,8 @@ namespace TestServer.Services.Results
         public async Task<bool> AddResult(int testId, string login, int result)
         {
             using var db = new TestContext();
-            var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));
+			// todo(v): вместо login стоит передавать либо userId, либо user
+			var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));
             try
             {
 
@@ -36,15 +37,16 @@ namespace TestServer.Services.Results
         public async Task<List<CustomResultDTO>> GetResults(int testId, string login)
         {
             using var db = new TestContext();
+			// todo(v): вместо login стоит передавать либо userId, либо user
             var user = await db.Users.FirstOrDefaultAsync(x => x.Login.Equals(login));
             var test = await db.Tests.FirstOrDefaultAsync(x => x.Id.Equals(testId));
-            var results = await db.UserResults.Where(x => x.UserId.Equals(user.Id) && x.TestId.Equals(test.Id)).ToListAsync();
-            var list = results.Select(x => new CustomResultDTO()
+            var results = db.UserResults.Where(x => x.UserId.Equals(user.Id) && x.TestId.Equals(test.Id));
+            var list = await results.Select(x => new CustomResultDTO()
             {
-                TestName = test.Name,
-                UserLogin = user.Login,
+                TestName = x.Test.Name,
+                UserLogin = x.User.Login,
                 Result = x.Result
-            }).ToList();
+            }).ToListAsync();
             return list;
 
         }
