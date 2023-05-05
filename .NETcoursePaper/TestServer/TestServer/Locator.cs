@@ -29,10 +29,10 @@ namespace TestServer
             RegisterSingleton<ICommand, AddTestCommand>(registration);
             RegisterSingleton<ICommand, GetTestsCommand>(registration);
             RegisterSingleton<ICommand, AddQuestionCommand>(registration);
-            RegisterSingleton<ICommand, GetConcreteTestCommand>(registration);
+            RegisterSingleton<ICommand, GetTestCommand>(registration);
             RegisterSingleton<ICommand, GetQuestionsCommand>(registration);
             RegisterSingleton<ICommand, UpdateQuestionCommand>(registration);
-            RegisterSingleton<ICommand, GetConcreteQuestionCommand>(registration);
+            RegisterSingleton<ICommand, GetQuestionCommand>(registration);
             RegisterSingleton<ICommand, DeleteQuestionCommand>(registration);
             RegisterSingleton<ICommand, DeleteTestCommand>(registration);
             RegisterSingleton<ICommand, UpdateTestCommand>(registration);

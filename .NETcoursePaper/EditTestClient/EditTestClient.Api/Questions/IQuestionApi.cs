@@ -12,7 +12,7 @@ namespace EditTestClient.Api.Questions
 
         public Task<HttpStatusCode> UpdateQuestion(QuestionRequest question, int testId, int questionId, string token);
 
-        public Task<(HttpStatusCode statusCode, List<QuestionResponse> questions)> GetQuestions(int testId, string token);
+        public Task<(HttpStatusCode StatusCode, List<QuestionResponse> Questions)> GetQuestions(int testId, string token);
 
         public Task<QuestionResponse> GetQuestion(int testId, int questionId, string token);
 

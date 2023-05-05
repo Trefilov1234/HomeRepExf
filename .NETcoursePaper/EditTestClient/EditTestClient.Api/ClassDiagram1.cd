@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EditTestClient.Api.ApiBase" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAACAAEAQAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ApiBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EditTestClient.Api.UserRoles" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Helpers.ImageHelper" Collapsed="true">
+    <Position X="16.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAEAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\ImageHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Helpers.JsonSerializeHelper" Collapsed="true">
+    <Position X="16.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAABAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\JsonSerializeHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Helpers.RequestUriHelper" Collapsed="true">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\RequestUriHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Helpers.ViewHelper" Collapsed="true">
+    <Position X="16.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAUBAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\ViewHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Questions.QuestionApi" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAACAAAAAABAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Questions\QuestionApi.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EditTestClient.Api.Requests.QuestionRequest" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAEAACAAAAAAAAAAAAAABAAQAAACAAAAAA=</HashCode>
+      <FileName>Requests\QuestionRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Requests.ResultRequest" Collapsed="true">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Requests\ResultRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Requests.TestRequest" Collapsed="true">
+    <Position X="9.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Requests\TestRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Requests.UserRequest" Collapsed="true">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAACAAAQAAAAAAA=</HashCode>
+      <FileName>Requests\UserRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Responses.QuestionResponse" Collapsed="true">
+    <Position X="11.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAEAACAAAAAAAAAAAAAABAAQAAACAAAAAA=</HashCode>
+      <FileName>Responses\QuestionResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Responses.ResultResponse" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Responses\ResultResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Responses.TestResponse" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Responses\TestResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Responses.UserResponse" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Responses\UserResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EditTestClient.Api.Results.ResultApi" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Results\ResultApi.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EditTestClient.Api.Tests.TestApi" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAJAAAAAAAAAQAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Tests\TestApi.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EditTestClient.Api.Users.UserApi" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Users\UserApi.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="EditTestClient.Api.Questions.IQuestionApi" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAACAAAAAABAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Questions\IQuestionApi.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EditTestClient.Api.Results.IResultApi" Collapsed="true">
+    <Position X="5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Results\IResultApi.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EditTestClient.Api.Tests.ITestApi" Collapsed="true">
+    <Position X="7.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAJAAAAAAAAAQAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Tests\ITestApi.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EditTestClient.Api.Users.IUserApi" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Users\IUserApi.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

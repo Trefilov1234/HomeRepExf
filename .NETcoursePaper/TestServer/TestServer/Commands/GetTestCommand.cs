@@ -3,29 +3,27 @@ using System.Net;
 using System.Threading.Tasks;
 using TestServer.Common.Extensions;
 using TestServer.Helpers;
-using TestServer.Services.Questions;
+using TestServer.Services.Tests;
 using TestServer.Extensions;
 using System.Text.RegularExpressions;
 
 namespace TestServer.Commands
 {
-    public class GetConcreteQuestionCommand : ICommand
+    public class GetTestCommand : ICommand
     {
-        private const string testId = "testId";
-        private const string questionId = "questionId";
-        public string Path => @$"/tests/(?<{testId}>\d+)/questions/(?<{questionId}>\d+)";
+        private const string IdKey = "Id";
+        public string Path => @$"/tests/(?<{IdKey}>\d+)";
         public HttpMethod Method => HttpMethod.Get;
 
-        private readonly IQuestionService _questionService;
+        private readonly ITestService _testService;
 
-        public GetConcreteQuestionCommand(IQuestionService questionService)
+        public GetTestCommand(ITestService testService)
         {
-            _questionService = questionService;
+            _testService = testService;
         }
         public async Task HandleRequestAsync(HttpListenerContext context, Match path)
         {
-            var question_id = path.GetIntGroup(questionId);
-            var test_id = path.GetIntGroup(testId);
+            var id = path.GetIntGroup(IdKey);
             var tokenReq = context.Request.Headers.Get("Authorization");
             var jwtData = JWT.ValidateToken(tokenReq);
             if (jwtData.IsFaulted)
@@ -33,7 +31,7 @@ namespace TestServer.Commands
                 await context.WriteResponseAsync(401).ConfigureAwait(false);
                 return;
             }
-            var isSuccess = await _questionService.GetQuestionById(question_id, test_id);
+            var isSuccess = await _testService.GetTestById(id);
             if (isSuccess == null)
             {
                 await context.WriteResponseAsync(409).ConfigureAwait(false);

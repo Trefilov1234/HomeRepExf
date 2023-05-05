@@ -11,6 +11,6 @@ namespace EditTestClient.Api.Users
     {
         public Task<HttpResponseMessage> CreateUser(UserRequest user);
 
-        public Task<(HttpStatusCode statusCode, UserResponse user)> LoginUser(UserRequest user);
+        public Task<(HttpStatusCode StatusCode, UserResponse User)> LoginUser(UserRequest user);
     }
 }

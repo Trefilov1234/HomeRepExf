@@ -8,9 +8,9 @@ namespace EditTestClient.Api.Tests
 {
     public interface ITestApi
     {
-        public Task<(HttpStatusCode statusCode, List<TestResponse> tests)> GetTests(string token);
+        public Task<(HttpStatusCode StatusCode, List<TestResponse> Tests)> GetTests(string token);
 
-        public Task<(HttpStatusCode statusCode, TestResponse test)> GetTest(int id, string token);
+        public Task<(HttpStatusCode StatusCode, TestResponse Test)> GetTest(int id, string token);
 
         public Task<HttpStatusCode> DeleteTest(int testId, string token);
 

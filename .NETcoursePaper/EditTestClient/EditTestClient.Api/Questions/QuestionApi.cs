@@ -38,7 +38,7 @@ namespace EditTestClient.Api.Questions
             return response.StatusCode;
         }
 
-        public async Task<(HttpStatusCode statusCode, List<QuestionResponse> questions)> GetQuestions(int testId, string token)
+        public async Task<(HttpStatusCode StatusCode, List<QuestionResponse> Questions)> GetQuestions(int testId, string token)
         {
             var response = await SendAsync(HttpMethod.Get, $"/tests/{testId}/questions", token);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

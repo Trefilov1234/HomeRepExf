@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TestServer.Commands.AddQuestionCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAABAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\AddQuestionCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.AddResultCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAIAAAAgAEAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\AddResultCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.AddTestCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Commands\AddTestCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.CreateUserCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Commands\CreateUserCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.DeleteQuestionCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAABAAAAAAABAAAAAAEAAA=</HashCode>
+      <FileName>Commands\DeleteQuestionCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.DeleteTestCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAgIA=</HashCode>
+      <FileName>Commands\DeleteTestCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.GetQuestionCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAABAAAAAAABAAAAAAEAAA=</HashCode>
+      <FileName>Commands\GetQuestionCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.GetQuestionsCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Commands\GetQuestionsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.GetResultsCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAQAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Commands\GetResultsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.GetTestCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAgIA=</HashCode>
+      <FileName>Commands\GetTestCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.GetTestsCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Commands\GetTestsCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.LoginUserCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Commands\LoginUserCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.UpdateQuestionCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAABAAAAAAABAAAAAAEAAA=</HashCode>
+      <FileName>Commands\UpdateQuestionCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Commands.UpdateTestCommand" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAgIA=</HashCode>
+      <FileName>Commands\UpdateTestCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Extensions.HttpListenerContextExtensions" Collapsed="true">
+    <Position X="28" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\HttpListenerContextExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Extensions.HttpListenerRequestExtensions" Collapsed="true">
+    <Position X="28" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAgAAAAAAAAAAAAABACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\HttpListenerRequestExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Extensions.MatchExtensions" Collapsed="true">
+    <Position X="28" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\MatchExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Extensions.QuestionExtensions" Collapsed="true">
+    <Position X="28" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Extensions\QuestionExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Extensions.TestExtensions" Collapsed="true">
+    <Position X="28" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAACAAAA=</HashCode>
+      <FileName>Extensions\TestExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Extensions.UserExtensions" Collapsed="true">
+    <Position X="28" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAACAAAA=</HashCode>
+      <FileName>Extensions\UserExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Helpers.JsonSerializeHelper" Collapsed="true">
+    <Position X="26.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAABAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\JsonSerializeHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Locator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEABAAAAAAACAAIAACAICADAAAAAAAAGBAAAAQAAEA=</HashCode>
+      <FileName>Locator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.Program" Collapsed="true">
+    <Position X="24.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Server" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAACACAAAAAAAAAAAAAAAAAAAAAQAAABAAAAA=</HashCode>
+      <FileName>Server.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TestServer.UserRoles" Collapsed="true">
+    <Position X="22.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UserRoles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Requests.QuestionRequest" Collapsed="true">
+    <Position X="21" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAEAACAAAAAAAAAAAAAABAAQAAACAAAAAA=</HashCode>
+      <FileName>Requests\QuestionRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Requests.TestRequest" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Requests\TestRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Requests.UserRequest" Collapsed="true">
+    <Position X="19.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAACAAAQAAAAAAA=</HashCode>
+      <FileName>Requests\UserRequest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Responses.TestResponse" Collapsed="true">
+    <Position X="17.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Responses\TestResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TestServer.Responses.UserResponse" Collapsed="true">
+    <Position X="19.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAAAAAAAAAAAAAAgAAACAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Responses\UserResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TestServer.ICommand" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAgAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TestServer.IServer" Collapsed="true">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>IServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Grace.DependencyInjection.ILocatorService" Collapsed="true">
+    <Position X="15.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

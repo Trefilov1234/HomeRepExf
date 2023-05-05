@@ -17,7 +17,7 @@ namespace EditTestClient.Api.Users
             return SendAsync(HttpMethod.Post, "/users", null, body: user);
         }
 
-        public async Task<(HttpStatusCode statusCode, UserResponse user)> LoginUser(UserRequest user)
+        public async Task<(HttpStatusCode StatusCode, UserResponse User)> LoginUser(UserRequest user)
         {
             var response = await SendAsync(HttpMethod.Post, "/login", null, body: user);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

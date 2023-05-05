@@ -366,29 +366,29 @@ namespace EditTestClient.ViewModel
         private async Task MakeLogin()
         {
             var statusCode = await userApi.LoginUser(new UserRequest() { Login = Login, Password = Password });
-            token = statusCode.user.JWT.ToString();
-            clientUserRole = statusCode.user.UserType.ToString();
-            if (!statusCode.statusCode.Equals(HttpStatusCode.OK))
+            token = statusCode.User.JWT.ToString();
+            clientUserRole = statusCode.User.UserType.ToString();
+            if (!statusCode.StatusCode.Equals(HttpStatusCode.OK))
             {
                 MessageBox.Show("something went wrong");
                 return;
             }
-            var user = statusCode.user;
+            var user = statusCode.User;
             if (user.UserType.Equals(UserRoles.Student))
             {
                 var pair = await testApi.GetTests(token);
-                if (pair.statusCode == HttpStatusCode.Unauthorized)
+                if (pair.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     MessageBox.Show("incorrect authorization");
                 }
-                else if (pair.statusCode == HttpStatusCode.Forbidden)
+                else if (pair.StatusCode == HttpStatusCode.Forbidden)
                 {
                     MessageBox.Show("unavailable functionality");
                 }
                 else
                 {
-                    testService.TestBank = pair.tests;
-                    TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
+                    testService.TestBank = pair.Tests;
+                    TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.Tests));
                     AuthFormVanish = false;
                     StudentPartSelectTestFormVanish = true;
                 }
@@ -420,9 +420,9 @@ namespace EditTestClient.ViewModel
             if (editTestButtonWasClicked)
             {
                 var tests = await testApi.GetTests(token);
-                var localTests = ViewHelper.GetTests(tests.tests);
+                var localTests = ViewHelper.GetTests(tests.Tests);
                 var localTestName = localTests[(int)TestViewIndex].Substring(0, localTests[(int)TestViewIndex].IndexOf(' '));
-                int testId = tests.tests.FirstOrDefault(x => x.Name == localTestName).Id;
+                int testId = tests.Tests.FirstOrDefault(x => x.Name == localTestName).Id;
                 var updatedTest = await testApi.UpdateTest(new TestRequest()
                 {
                     Name = AddingTestName,
@@ -440,24 +440,24 @@ namespace EditTestClient.ViewModel
                     return;
                 }
                 var pair = await testApi.GetTests(token);
-                if (pair.statusCode == HttpStatusCode.Unauthorized)
+                if (pair.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     MessageBox.Show("incorrect authorization");
                     return;
                 }
-                if (pair.statusCode == HttpStatusCode.Forbidden)
+                if (pair.StatusCode == HttpStatusCode.Forbidden)
                 {
                     MessageBox.Show("unavailable functionality");
                     return;
                 }
-                if (pair.statusCode == HttpStatusCode.Conflict)
+                if (pair.StatusCode == HttpStatusCode.Conflict)
                 {
                     MessageBox.Show("something went wrong");
                     return;
                 }
                 MessageBox.Show($"you have added a test container {AddingTestName}\nnow fill it with questions");
-                testService.TestBank = pair.tests;
-                TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
+                testService.TestBank = pair.Tests;
+                TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.Tests));
 
                 PublishTestButtonClickedForDisable = false;
             }
@@ -477,14 +477,14 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.tests[(int)TestViewIndex].Id;
-            var testName = tests.tests[(int)TestViewIndex].Name;
-            var testAttempts = tests.tests[(int)TestViewIndex].AttemptsCount;
+            int testId = tests.Tests[(int)TestViewIndex].Id;
+            var testName = tests.Tests[(int)TestViewIndex].Name;
+            var testAttempts = tests.Tests[(int)TestViewIndex].AttemptsCount;
             var questions = await questionApi.GetQuestions(testId, token);
             AddingTestName = testName;
             AddingTestAttempts = testAttempts.ToString();
-            questionService.QuestionBank = questions.questions;
-            AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questions.questions));
+            questionService.QuestionBank = questions.Questions;
+            AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questions.Questions));
             PublishButtonClicked = true;
             ChooseTestFormVanish = false;
             AddTestFormVanish = true;
@@ -500,7 +500,7 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.tests[(int)TestViewIndex].Id;
+            int testId = tests.Tests[(int)TestViewIndex].Id;
             var deletedTest = await testApi.DeleteTest(testId, token);
             if (deletedTest.Equals(HttpStatusCode.OK)) MessageBox.Show("test was deleted");
             else MessageBox.Show("something went wrong");
@@ -531,9 +531,9 @@ namespace EditTestClient.ViewModel
             if (QuestionIndex != null)
             {
                 var tests = await testApi.GetTests(token);
-                int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+                int testId = tests.Tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.questions[(int)QuestionIndex].Id;
+                var questionId = questions.Questions[(int)QuestionIndex].Id;
                 var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
                 QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
                 QuestionTaskText = concreteQuestion.Text;
@@ -558,9 +558,9 @@ namespace EditTestClient.ViewModel
             if (QuestionIndex != null)
             {
                 var tests = await testApi.GetTests(token);
-                int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+                int testId = tests.Tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.questions[(int)QuestionIndex].Id;
+                var questionId = questions.Questions[(int)QuestionIndex].Id;
                 var deletedQuestion = await questionApi.DeleteQuestion(testId, questionId, token);
                 if (deletedQuestion.Equals(HttpStatusCode.OK)) MessageBox.Show("question was deleted");
                 else MessageBox.Show("something went wrong");
@@ -597,11 +597,11 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            int testId = tests.tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
+            int testId = tests.Tests.FirstOrDefault(x => x.Name.Equals(AddingTestName)).Id;
             if (editQuestionButtonWasClicked)
             {
                 var questions = await questionApi.GetQuestions(testId, token);
-                var questionId = questions.questions[(int)QuestionIndex].Id;
+                var questionId = questions.Questions[(int)QuestionIndex].Id;
                 var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
                 HttpStatusCode updatedQuestion;
                 if (addImageButtonWasClicked)
@@ -629,7 +629,7 @@ namespace EditTestClient.ViewModel
                 if (updatedQuestion.Equals(HttpStatusCode.OK))
                 {
                     var questionsToView = await questionApi.GetQuestions(testId, token);
-                    questionService.QuestionBank = questionsToView.questions;
+                    questionService.QuestionBank = questionsToView.Questions;
                     AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questionService.QuestionBank));
                 }
                 AddOrUpdateQuestionButtonContent = "add question";
@@ -647,7 +647,7 @@ namespace EditTestClient.ViewModel
                 if (addedQuestion.Equals(HttpStatusCode.OK))
                 {
                     var questionsToView = await questionApi.GetQuestions(testId, token);
-                    questionService.QuestionBank = questionsToView.questions;
+                    questionService.QuestionBank = questionsToView.Questions;
                     AddingQuestions = new ObservableCollection<string>(ViewHelper.GetQuestions(questionService.QuestionBank));
                 }
             }
@@ -678,7 +678,7 @@ namespace EditTestClient.ViewModel
             AddingTestAttempts = "";
             PublishButtonClicked = false;
             var tests = await testApi.GetTests(token);
-            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.tests));
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.Tests));
             AddOrUpdateTestContent = "publish test";
             editTestButtonWasClicked = false;
             PublishTestButtonClickedForDisable = true;
@@ -702,19 +702,28 @@ namespace EditTestClient.ViewModel
                 return;
             }
             var tests = await testApi.GetTests(token);
-            var test = tests.tests[(int)TestViewIndex];
+            var test = tests.Tests[(int)TestViewIndex];
             int testId = test.Id;
             var resultHistory = await resultApi.GetResults(testId, token);
-            if (test.AttemptsCount - resultHistory.results.Count() == 0)
+            if (test.AttemptsCount - resultHistory.Results.Count() == 0)
             {
                 MessageBox.Show("you have run out of attempts to pass");
                 return;
             }
             var questions = await questionApi.GetQuestions(testId, token);
-            questionService.QuestionBank = questions.questions;
+            if (questions.Questions.Count() == 0)
+            {
+                MessageBox.Show("there are no questions in this test");
+                return;
+            }
+            if (questions.Questions.Count() == 1)
+            {
+                NextQuestionButtonContent = "complete the test";
+            }
+            questionService.QuestionBank = questions.Questions;
             resultService.InitializeRightAnswers(questionService.QuestionBank);
             var localQuestion = questionService.QuestionBank[0];
-            int questionId = questions.questions.FirstOrDefault(x => x.Text.Equals(localQuestion.Text)).Id;
+            int questionId = questions.Questions.FirstOrDefault(x => x.Text.Equals(localQuestion.Text)).Id;
             var concreteQuestion = await questionApi.GetQuestion(testId, questionId, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
@@ -729,7 +738,7 @@ namespace EditTestClient.ViewModel
             UserResult = "";
             UserAttempts = "";
             SolutionPartUserAnswer = "";
-            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.tests));
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(tests.Tests));
             StudentPartSolveTestFormVanish = false;
             StudentPartResultFormVanish = false;
             StudentPartSelectTestFormVanish = true;
@@ -748,7 +757,7 @@ namespace EditTestClient.ViewModel
             currQuestionIndex--;
             var currQuestion = questionService.QuestionBank[currQuestionIndex];
             var tests = await testApi.GetTests(token);
-            int testId = tests.tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
+            int testId = tests.Tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
             var concreteQuestion = await questionApi.GetQuestion(testId, currQuestion.Id, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
@@ -771,11 +780,11 @@ namespace EditTestClient.ViewModel
                 UserResult = resultService.CalculateResult().ToString();
                 var question = questionService.QuestionBank[0];
                 var resTests = await testApi.GetTests(token);
-                int resTestId = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).Id;
+                int resTestId = resTests.Tests.FirstOrDefault(x => x.Name == question.TestName).Id;
                 await resultApi.AddResult(resTestId, int.Parse(UserResult), token);
-                int testAttempts = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
+                int testAttempts = resTests.Tests.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
                 var resultHistory = await resultApi.GetResults(resTestId, token);
-                UserAttempts = (testAttempts - resultHistory.results.Count()).ToString();
+                UserAttempts = (testAttempts - resultHistory.Results.Count()).ToString();
                 StudentPartSolveTestFormVanish = false;
                 StudentPartResultFormVanish = true;
                 return;
@@ -783,7 +792,7 @@ namespace EditTestClient.ViewModel
             currQuestionIndex++;
             var currQuestion = questionService.QuestionBank[currQuestionIndex];
             var tests = await testApi.GetTests(token);
-            int testId = tests.tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
+            int testId = tests.Tests.FirstOrDefault(x => x.Name == currQuestion.TestName).Id;
             var concreteQuestion = await questionApi.GetQuestion(testId, currQuestion.Id, token);
             QuestionImage = ImageHelper.BitmapToBitmapSource(ImageHelper.ByteToBitMap(concreteQuestion.Image));
             SolutionPartTestQuestion = concreteQuestion.Text;
@@ -797,18 +806,18 @@ namespace EditTestClient.ViewModel
         {
             TeacherSelectModeFormVanish = false;
             var pair = await testApi.GetTests(token);
-            if (pair.statusCode == HttpStatusCode.Unauthorized)
+            if (pair.StatusCode == HttpStatusCode.Unauthorized)
             {
                 MessageBox.Show("incorrect authorization");
                 return;
             }
-            if (pair.statusCode == HttpStatusCode.Forbidden)
+            if (pair.StatusCode == HttpStatusCode.Forbidden)
             {
                 MessageBox.Show("unavailable functionality");
                 return;
             }
-            testService.TestBank = pair.tests;
-            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
+            testService.TestBank = pair.Tests;
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.Tests));
             AuthFormVanish = false;
             ChooseTestFormVanish = true;
         }
@@ -817,7 +826,7 @@ namespace EditTestClient.ViewModel
         {
             TeacherSelectModeFormVanish = false;
             var pair = await testApi.GetTests(token);
-            if (pair.statusCode == HttpStatusCode.Unauthorized)
+            if (pair.StatusCode == HttpStatusCode.Unauthorized)
             {
                 MessageBox.Show("incorrect authorization");
                 return;
@@ -827,8 +836,8 @@ namespace EditTestClient.ViewModel
                 MessageBox.Show("unavailable functionality");
                 return;
             }
-            testService.TestBank = pair.tests;
-            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.tests));
+            testService.TestBank = pair.Tests;
+            TestsData = new ObservableCollection<string>(ViewHelper.GetTests(pair.Tests));
             AuthFormVanish = false;
             StudentPartSelectTestFormVanish = true;
         }
@@ -850,11 +859,9 @@ namespace EditTestClient.ViewModel
         {
             var question = questionService.QuestionBank[0];
             var resTests = await testApi.GetTests(token);
-            int resTestId = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).Id;
-            await resultApi.AddResult(resTestId, int.Parse(UserResult), token);
-            int testAttempts = resTests.tests.FirstOrDefault(x => x.Name == question.TestName).AttemptsCount;
+            int resTestId = resTests.Tests.FirstOrDefault(x => x.Name == question.TestName).Id;
             var resultHistory = await resultApi.GetResults(resTestId, token);
-            HistorySource = new ObservableCollection<string>(ViewHelper.GetResults(resultHistory.results));
+            HistorySource = new ObservableCollection<string>(ViewHelper.GetResults(resultHistory.Results));
             HistoryFormVanish = true;
             StudentPartResultFormVanish = false;
         }

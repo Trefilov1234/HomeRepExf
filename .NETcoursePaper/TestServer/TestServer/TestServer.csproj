@@ -70,8 +70,8 @@
     <Compile Include="Commands\CreateUserCommand.cs" />
     <Compile Include="Commands\DeleteQuestionCommand.cs" />
     <Compile Include="Commands\DeleteTestCommand.cs" />
-    <Compile Include="Commands\GetConcreteQuestionCommand.cs" />
-    <Compile Include="Commands\GetConcreteTestCommand.cs" />
+    <Compile Include="Commands\GetQuestionCommand.cs" />
+    <Compile Include="Commands\GetTestCommand.cs" />
     <Compile Include="Commands\GetQuestionsCommand.cs" />
     <Compile Include="Commands\GetResultsCommand.cs" />
     <Compile Include="Commands\GetTestsCommand.cs" />
@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

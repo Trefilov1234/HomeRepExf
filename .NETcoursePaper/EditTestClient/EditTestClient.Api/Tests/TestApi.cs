@@ -30,15 +30,15 @@ namespace EditTestClient.Api.Tests
             return response.StatusCode;
         }
 
-        public async Task<(HttpStatusCode statusCode, List<TestResponse> tests)> GetTests(string token)
+        public async Task<(HttpStatusCode StatusCode, List<TestResponse> Tests)> GetTests(string token)
         {
             var response = await SendAsync(HttpMethod.Get, "/tests", token);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             var testResp = JsonSerializeHelper.Deserialize<List<TestResponse>>(responseBody);
-            return (statusCode: response.StatusCode, tests: testResp);
+            return (response.StatusCode,testResp);
         }
 
-        public async Task<(HttpStatusCode statusCode, TestResponse test)> GetTest(int id, string token)
+        public async Task<(HttpStatusCode StatusCode, TestResponse Test)> GetTest(int id, string token)
         {
             var response = await SendAsync(HttpMethod.Get, $"/tests/{id}", token);
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
