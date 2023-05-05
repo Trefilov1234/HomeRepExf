@@ -13,7 +13,7 @@ namespace TestServer.Common.Extensions
             }
             catch (Exception)
             {
-                // ignored
+
             }
         }
     }

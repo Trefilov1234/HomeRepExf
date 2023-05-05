@@ -1,11 +1,11 @@
 ﻿using Grace.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TestServer.Commands;
-using TestServer.Services;
+using TestServer.Services.Questions;
+using TestServer.Services.Results;
+using TestServer.Services.Tests;
+using TestServer.Services.Users;
 
 namespace TestServer
 {
@@ -25,19 +25,25 @@ namespace TestServer
         private static void RegisterDependencies(IExportRegistrationBlock registration)
         {
             RegisterSingleton<ICommand, CreateUserCommand>(registration);
-            //RegisterSingleton<ICommand, CreateManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, DeleteDetailCommand>(registration);
-            //RegisterSingleton<ICommand, DeleteManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, GetDetailCommand>(registration);
-            //RegisterSingleton<ICommand, GetDetailsCommand>(registration);
-            //RegisterSingleton<ICommand, GetManufacturerCommand>(registration);
-            //RegisterSingleton<ICommand, GetManufacturersCommand>(registration);
-            //RegisterSingleton<ICommand, UpdateDetailCommand>(registration);
-            //RegisterSingleton<ICommand, UpdateManufacturerCommand>(registration);
+            RegisterSingleton<ICommand, LoginUserCommand>(registration);
+            RegisterSingleton<ICommand, AddTestCommand>(registration);
+            RegisterSingleton<ICommand, GetTestsCommand>(registration);
+            RegisterSingleton<ICommand, AddQuestionCommand>(registration);
+            RegisterSingleton<ICommand, GetTestCommand>(registration);
+            RegisterSingleton<ICommand, GetQuestionsCommand>(registration);
+            RegisterSingleton<ICommand, UpdateQuestionCommand>(registration);
+            RegisterSingleton<ICommand, GetQuestionCommand>(registration);
+            RegisterSingleton<ICommand, DeleteQuestionCommand>(registration);
+            RegisterSingleton<ICommand, DeleteTestCommand>(registration);
+            RegisterSingleton<ICommand, UpdateTestCommand>(registration);
+            RegisterSingleton<ICommand, AddResultCommand>(registration);
+            RegisterSingleton<ICommand, GetResultsCommand>(registration);
 
             RegisterSingleton<IServer, Server>(registration);
             RegisterSingleton<IUserService, UserService>(registration);
-            //RegisterSingleton<IManufacturersProvider, ManufacturersProvider>(registration);
+            RegisterSingleton<ITestService, TestService>(registration);
+            RegisterSingleton<IQuestionService, QuestionService>(registration);
+            RegisterSingleton<IResultService, ResultService>(registration);
         }
 
         private static void RegisterSingleton<TFrom, TTo>(IExportRegistrationBlock registrationBlock) where TTo : TFrom
@@ -97,7 +103,6 @@ namespace TestServer
         {
             return _container.TryLocateByName(name, out value, extraData, consider);
         }
-        // ReSharper disable MethodOverloadWithOptionalParameter
         public object Locate(Type type, object extraData = null, ActivationStrategyFilter consider = null, object withKey = null, bool isDynamic = false)
         {
             return _container.Locate(type, extraData, consider, withKey, isDynamic);
@@ -106,6 +111,5 @@ namespace TestServer
         {
             return _container.Locate<T>(extraData, consider, withKey, isDynamic);
         }
-        // ReSharper restore MethodOverloadWithOptionalParameter
     }
 }

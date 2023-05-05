@@ -64,9 +64,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddQuestionCommand.cs" />
+    <Compile Include="Commands\AddResultCommand.cs" />
+    <Compile Include="Commands\AddTestCommand.cs" />
     <Compile Include="Commands\CreateUserCommand.cs" />
+    <Compile Include="Commands\DeleteQuestionCommand.cs" />
+    <Compile Include="Commands\DeleteTestCommand.cs" />
+    <Compile Include="Commands\GetQuestionCommand.cs" />
+    <Compile Include="Commands\GetTestCommand.cs" />
+    <Compile Include="Commands\GetQuestionsCommand.cs" />
+    <Compile Include="Commands\GetResultsCommand.cs" />
+    <Compile Include="Commands\GetTestsCommand.cs" />
+    <Compile Include="Commands\LoginUserCommand.cs" />
+    <Compile Include="Commands\UpdateQuestionCommand.cs" />
+    <Compile Include="Commands\UpdateTestCommand.cs" />
     <Compile Include="Extensions\HttpListenerContextExtensions.cs" />
     <Compile Include="Extensions\HttpListenerRequestExtensions.cs" />
+    <Compile Include="Extensions\MatchExtensions.cs" />
+    <Compile Include="Extensions\QuestionExtensions.cs" />
+    <Compile Include="Extensions\TestExtensions.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="Helpers\JsonSerializeHelper.cs" />
     <Compile Include="ICommand.cs" />
@@ -74,23 +90,31 @@
     <Compile Include="Locator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requests\QuestionRequest.cs" />
+    <Compile Include="Requests\TestRequest.cs" />
     <Compile Include="Requests\UserRequest.cs" />
+    <Compile Include="Responses\TestResponse.cs" />
     <Compile Include="Responses\UserResponse.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="UserRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\TestServer.Common\TestServer.Common.csproj">
       <Project>{44fdc07d-30f2-4f1d-a391-16ca1eb240e8}</Project>
       <Name>TestServer.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestServer.Context\TestServer.Context.csproj">
-      <Project>{7AD96091-37F1-48BB-BD55-6E2F14E51A4E}</Project>
+      <Project>{7ad96091-37f1-48bb-bd55-6e2f14e51a4e}</Project>
       <Name>TestServer.Context</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TestServer.Domain\TestServer.Domain.csproj">
+      <Project>{de1f7f41-1af3-46d5-a2a7-f0bcdde05534}</Project>
+      <Name>TestServer.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestServer.Services\TestServer.Services.csproj">
       <Project>{573a08e0-9b27-4790-b903-dd5ede3ad30c}</Project>
